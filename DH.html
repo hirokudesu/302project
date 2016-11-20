@@ -1,11 +1,17 @@
+<!DOCTYPE html>
 <html ng-app>
- 	<!-- Body tag augmented with ngController directive  -->
- 	<body ng-controller="MyController">
-   		<input ng-model="foo" value="bar">
-   		<!-- Button tag with ng-click directive, and
-        string expression 'buttonText'
-      	wrapped in "{{ }}" markup -->
-   		<button ng-click="changeFoo()">{{buttonText}}</button>
-   		<script src="angular.js">
- 	</body>
+<head>
+	<title>Hello World, AngularJS - ViralPatel.net</title>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+</head>
+<body>
+	
+	Write some text in textbox:
+	<input type="text" ng-model="sometext" />
+
+	<h1 ng-show="sometext">Hello {{ sometext }}</h1>
+	
+</body>
 </html>
