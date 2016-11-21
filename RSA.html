@@ -2,6 +2,7 @@
 <html ng-app="myApp" ng-controller="myCtrl">
 <head>
 	<title>Diffie-Hellman Key Exchange</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript"
 		src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 
@@ -75,8 +76,8 @@
 	
 	<ul>
 	<li>N ={{n}}=pq={{P}}*{{Q}}
-	<li>E ={{e}}=coprime(phi(n))
-	<li>D ={{d}}=modularInverse(E,phi(n))
+	<li>E ={{e}}=coprime(φ(n))
+	<li>D ={{d}}=modularInverse(E,φ(n))
 	</ul>
 	
 	<table>
@@ -111,7 +112,7 @@
 	
 	<tr>
 		<td>
-		phi(n)
+		φ(n)
 		</td>
 		<td>
 		{{phi}}
@@ -152,10 +153,10 @@
 	<div>
 	<hr>
 	<ul id="navbar">
-	<li><a href="OTP.hrml">Previous:One Time Pad</a></li>
+	<li><a href="DH.hrml">Previous:Diffie Hellman</a></li>
 	<li><a href="index.html">Up:Contents </a></li>
-	<li><a href="RSA.html"> Next: RSA </a></li>
-	<ul></li>
+	
+	</ul>
 	</div>
 	
 </body>
@@ -199,6 +200,14 @@ function decrypt(C,d,n)
 {
 	//M= C^d mod n
 	//gndn, you have the decrypted string , why bother implementing this
+}
+
+//From : http://stackoverflow.com/questions/15761790/convert-a-32bit-integer-into-4-bytes-of-data-in-javascript
+function toBytesInt32 (num) {
+    arr = new ArrayBuffer(4); // an Int32 takes 4 bytes
+    view = new DataView(arr);
+    view.setUint32(0, num, false); // byteOffset = 0; litteEndian = false
+    return arr;
 }
 
 var app = angular.module('myApp', []);
