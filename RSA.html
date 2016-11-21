@@ -1,11 +1,238 @@
-<html ng-app>
- 	<!-- Body tag augmented with ngController directive  -->
- 	<body ng-controller="MyController">
-   		<input ng-model="foo" value="bar">
-   		<!-- Button tag with ng-click directive, and
-        string expression 'buttonText'
-      	wrapped in "{{ }}" markup -->
-   		<button ng-click="changeFoo()">{{buttonText}}</button>
-   		<script src="angular.js">
- 	</body>
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+<head>
+	<title>Diffie-Hellman Key Exchange</title>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+</head>
+<body>
+<div>
+	<div>
+	<h1> Diffie-Hellman Key Exchange </h1>
+	<p> [Introduction goes here] </p>
+	</div>
+	
+	<div>
+	<h2>Public numbers</h2>
+	<p>Public numbers are agreed upon at the start of the transaction. 
+	 They are sent in the clear so anyone can see them.</p>
+	<ul>
+	<li>P:An arbitrary large prime number</li>
+	<li>Q:An arbitrary large prime number</li>
+	</ul>
+	</div>
+	
+	<div>
+	<h2>Numbers Alice Knows</h2>
+	<ul>
+	<li>P: It's public</li>
+	<li>Q: It's public</li>
+	<li>Xa: Alice's <u>private key</u> is a randomly generated number only she knows.</li>
+	</ul>
+	</div>
+	
+	<div>
+	<h2>Numbers Bob Knows</h2>
+	<ul>
+	<li>P: It's public</li>
+	<li>Q: It's public</li>
+	</ul>
+	</div>
+	
+	<div>
+	<h2> Public generated numbers</h2>
+	
+	<p>In RSA, both parties don't have to be communicating to establish the key, because
+	the secret is not shared.  This means only Alice generates which she shares with Bob.
+	Bob can encrypt a secret to send to Alice, but not decrypt messages intended for Alice.</p>
+	
+	</div>
+	
+	</div>
+	
+	<div>
+	
+	<h2> Private generated numbers</h2>
+	
+	<p>Using the private data and shared data both parties generate new shared data</p>
+	
+	<p>Ka=(Yb^Xa) mod P</p>
+	<p>Kb=(Ya^Xb) mod P</p>
+	<p>Ka=Kb</p>
+	</div>
+	
+	</div>
+	<h1> Demo </h1>
+	
+
+	
+	<!--Probably not a good idea to just elt people change these-->
+	<!--P:<input type="text" ng-model="P" ><br>-->
+	<!--G:<input type="text" ng-model="Q" ><br>-->
+	
+	<button type="button" ng-click="computeKeys()">Compute Keys</button>
+	
+	<ul>
+	<li>N ={{n}}=pq={{P}}*{{Q}}
+	<li>E ={{e}}=coprime(phi(n))
+	<li>D ={{d}}=modularInverse(E,phi(n))
+	</ul>
+	
+	<table>
+	<tbody>
+	
+	<tr>
+		<td>
+		P
+		</td>
+		<td>
+		{{P}}
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+		Q
+		</td>
+		<td>
+		{{Q}}
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+		N
+		</td>
+		<td>
+		{{n}}
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+		phi(n)
+		</td>
+		<td>
+		{{phi}}
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+		E
+		</td>
+		<td>
+		{{e}}
+		</td>
+	</tr>
+	<tr>
+		<td>
+		D
+		</td>
+		<td>
+		{{d}}
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	
+		Write some text in textbox:
+	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
+	
+	<h2>Plain</h2>
+	<p ng-model="plain" > {{plain}}</p>
+	
+	<h2>Plain(hex)</h2>
+	<p ng-model="hexPlain" > {{hexPlain}}</p>
+	<p >Crypt {{ hexCrypt }}</p>
+	<p >Hello {{ hexCrypt }}</p>
+	</div>
+	
+	<div>
+	<hr>
+	<ul id="navbar">
+	<li><a href="OTP.hrml">Previous:One Time Pad</a></li>
+	<li><a href="index.html">Up:Contents </a></li>
+	<li><a href="RSA.html"> Next: RSA </a></li>
+	<ul></li>
+	</div>
+	
+</body>
+
+<script type="text/javascript">
+
+String.prototype.hexEncode = function(){
+    var hex, i;
+
+    var result = "";
+    for (i=0; i<this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += (" "+hex).slice(-4);
+    }
+
+    return result
+}
+
+
+//returns the first coprime integer found
+function findCoprime(n)
+{
+	//Euler's method
+	alert("Please implement findCoprime()");
+}
+
+//returns x for ax= 1 mod(base)
+function modMultiplicativeInverse(a,base)
+{
+	//Extended Euler's thm
+	alert("Please implement modMultiplicativeInverse(a,base)");
+}
+
+function encrypt(M,e,n)
+{
+//C = M^e mod n
+//You might need bigint.js for this, use modexp
+}
+
+function decrypt(C,d,n)
+{
+	//M= C^d mod n
+	//gndn, you have the decrypted string , why bother implementing this
+}
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "John Doe";
+    $scope.P=1159523
+    $scope.Q=117
+    $scope.e="?"
+    $scope.d="?"
+    $scope.n="?"
+    $scope.phi="?"
+    $scope.computeKeys = function() {
+        $scope.n= $scope.p * $scope.q
+        $scope.phi= ($scope.p -1)*($scope.q -1)
+        
+        //gcd(phi,e)==1
+        //The likelihood that a uniformly sampled 
+        //number is coprime to phi is 60%
+        //The random number should be less than phi
+        $scope.e = findCoprime($scope.phi)
+        
+        //ed ≡ 1 (mod φ(n))
+        $scope.d = modMultiplicativeInverse($scope.e,$scope.phi)
+      };
+    
+    
+    $scope.changeMessage = function() {
+        $scope.hexPlain = $scope.plain.hexEncode();
+      };
+});
+
+</script>
+<script type="text/javascript">
+//console.log("0xF1" + data.charCodeAt(0).toString(16));
+</script>
+
 </html>
