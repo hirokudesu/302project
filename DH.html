@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="myApp" ng-controller="myCtrl">
 <head>
-	<title>Hello World, AngularJS - ViralPatel.net</title>
+	<title>Diffie-Hellman Key Exchange</title>
 	<script type="text/javascript"
 		src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 
 </head>
 <body>
 	
-	Write some text in textbox:
-	<input type="text" ng-model="sometext" />
-
-	<h1 ng-show="sometext">Hello {{ sometext }}</h1>
-	<p >Plain {{ hexPlain }}</p>
-	<p >Crypt {{ hexCrypt }}</p>
-	<p >Hello {{ hexCrypt }}</p>
+	<div>
+	<h1> Diffie-Hellman Key Exchange </h1>
+	<p> [Introduction goes here] </p>
+	</div>
 	
 	<div>
 	<h2>Public numbers</h2>
@@ -73,5 +70,54 @@
 	<p>Ka=Kb</p>
 	</div>
 	
+	</div>
+	<h1> Demo </h1>
+	
+	Write some text in textbox:
+	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
+	P:<input type="text" ng-model="P" ><br>
+	G:<input type="text" ng-model="G" ><br>
+	
+	<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
+	
+	<h2>Plain</h2>
+	<p ng-model="plain" > {{plain}}</p>
+	
+	<h2>Plain(hex)</h2>
+	<p ng-model="hexPlain" > {{hexPlain}}</p>
+	<p >Crypt {{ hexCrypt }}</p>
+	<p >Hello {{ hexCrypt }}</p>
+	
+	
 </body>
+
+<script type="text/javascript">
+
+String.prototype.hexEncode = function(){
+    var hex, i;
+
+    var result = "";
+    for (i=0; i<this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += (" "+hex).slice(-4);
+    }
+
+    return result
+}
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "John Doe";
+    
+    
+    $scope.changeMessage = function() {
+        $scope.hexPlain = $scope.plain.hexEncode();
+      };
+});
+
+</script>
+<script type="text/javascript">
+//console.log("0xF1" + data.charCodeAt(0).toString(16));
+</script>
+
 </html>
