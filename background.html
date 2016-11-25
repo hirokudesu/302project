@@ -9,11 +9,17 @@
 <body>
 	
 	<div>
-	<h1> One Time Pad </h1>
-	<h1> A Pad on +26 over letters<h1>
-	<h1> Logical XOR as is +_2 on Z_2 </h1>
-	<h2> Generalization over strings</h2>
-	<p> bitwise logical xor</p>
+	<h1> Background: A Little Computer science </h1>
+	<h1> Coding Numbers In Binary </h1>
+	<p>bytes,bits,shannons, register sies and big integers, complexity of factorization, hexadecimal notation</p>
+	<p>B=(b_0,b_1,b_2,b_3,b_4,b_5,b_6,b_7)
+	<h1> Text As Numbers </h1>
+	<p>ASCII,UTF-8, generalization of byte stream</p>
+	<p> Character encodings are maps </p>
+	<h1> Logical Operations </h1>
+	<p>Focus on Xor</p>
+	<h2> All data is strings</h2>
+	<p>All data is strings, so the algorithms presented are generalizable to all data</p>
 	
 	
 	</div>
@@ -25,8 +31,7 @@
 	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
 	P:<input type="text" ng-model="P" ><br>
 	G:<input type="text" ng-model="G" ><br>
-	<!-- base 26 OTP -- >
-	<!--- generalization of otp-->
+	
 	<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
 	
 	<h2>Plain</h2>
