@@ -1,5 +1,18 @@
 
 
+.caption
+{
+	text-align:center;
+	font-style:italic;
+	width:100%;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #navbar li
 {
 	display: block;
