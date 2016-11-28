@@ -5,6 +5,8 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript"
 		src="angular.js"></script>
+	<script type="text/javascript" src="numbertheory.js"></script>
+	<script type="text/javascript" src="BigInt.js"></script>
 
 </head>
 <body>
@@ -180,7 +182,7 @@ String.prototype.hexEncode = function(){
 function findCoprime(n)
 {
 	//Euler's method
-	alert("Please implement findCoprime()");
+	return coprime(n);
 }
 
 //returns x for ax= 1 mod(base)
@@ -192,6 +194,8 @@ function modMultiplicativeInverse(a,base)
 
 function encrypt(M,e,n)
 {
+	c = int2bigInt(M[0]);
+	c = c.modeexp(e,n);
 //C = M^e mod n
 //You might need bigint.js for this, use modexp
 }
@@ -220,8 +224,8 @@ app.controller('myCtrl', function($scope) {
     $scope.n="?"
     $scope.phi="?"
     $scope.computeKeys = function() {
-        $scope.n= $scope.p * $scope.q
-        $scope.phi= ($scope.p -1)*($scope.q -1)
+        $scope.n= $scope.P * $scope.Q
+        $scope.phi= ($scope.P -1)*($scope.Q-1)
         
         //gcd(phi,e)==1
         //The likelihood that a uniformly sampled 
@@ -231,6 +235,7 @@ app.controller('myCtrl', function($scope) {
         
         //ed ≡ 1 (mod φ(n))
         $scope.d = modMultiplicativeInverse($scope.e,$scope.phi)
+        
       };
     
     

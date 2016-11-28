@@ -84,11 +84,17 @@
 <div>
 
 <h2> Why are keys hard to crack</h2>
-<p>For a binary string (a string with combinatorial family {0,1}, the  number of possible permutations of length n is 2^n. 
-The function y=2^x grows very quickly, experiment by raising the number of bits in the demo below.
+<p>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+For a binary string (a string with combinatorial family {0,1}, the  number of possible permutations of length n is 2<sup>n</sup>. 
+The function 
+y=2<sup>x</sup> 
+grows very quickly, experiment by raising the number of bits in the demo below.
 At 64 bits the amount of time necessary to perform a brute force attack is a long time.
 In modern cryptography we use 256 bit or 512 bit keys.(Not shown here because of technical
 restrictions)
+</math>
+</p>
 <p>How long would it take to permute <input type="number" min="1" max="127" step="1" ng-model="bitCount" ng-change="computeTime()">
 bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?</p>
 <table ng-init="computeTime()">
@@ -103,17 +109,28 @@ bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" n
 <p>Suggest a reason why 64 bits is insufficient if it would take {{(_computeTime(64,GHz)/(3600*24*365)).toFixed(2)}} years to decrypt.
 Are 80 bits enough?  Why/Why not?</p>
 <div class="challengeSoln">
-<p> 80 bits is good enough.  If the entire load of the fastest 
-super computer in the world to compute this were brute forcing, it would still take about 
+<p ng-hide="showAnswer[0]" ng-click="showAnswer[0]=true">Click to show answer</p>
+<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false"> 80 bits is good enough to protect against most attackers.  If the entire load of the fastest 
+super computer in the world was tasked to compute this by brute force, it would still take about 
 2 years.  The combined computing power of several super computers could decrypt faster.
 But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
-It start to take eons for conventional computers.</p>
+It start to take eons for conventional computers.  Unfortunately most cryptographic algorithms rely on primes,
+so a prime sieve can be used to perform better, at least for small primes.  Consequently we tend to choose big primes to avoid problems.</p>
 </div>
 </div>
 
 </div>
                 <h1>Text As Numbers</h1>
 
+                <p>Remember that a computer can only represent numbers in memory.  A number has no intrinsic symbolic value, so
+                we need to interpret them somehow.  We already know we can interpret numbers on arithmetic, but it is also possible
+                to interpret them as text.  We call the textual interpretation of a number its <strong>encoding</strong>.
+                An encoding maps a number to a <strong>code point</strong> which is mapped to a <strong>glyph</strong> when rendered.</p>
+                
+                <p>Interpretation is an important part of cryptography bare this in mind when thinking about the algorithms describes.
+                For example a codepoint U+1F4A9 is defined as 💩 .  On its own 1F4A9 has no meaning, but we decided that it means this cheery
+                fellow, and so it does.  Similarly, all emoji codepoints map to different glyphs on different platforms.
+                <a href="http://unicode.org/emoji/charts/full-emoji-list.html"> This table shows the differences across various platforms</a></p>
                 <p>ASCII,UTF-8, generalization of byte stream</p>
                 
                 <div>
@@ -192,6 +209,7 @@ It start to take eons for conventional computers.</p>
     $scope.GHz=2.2
     $scope.bitCount=10;
     $scope.Math = window.Math;
+    $scope.showAnswer=[false,false,false];
 
 
     $scope.changeMessage = function() {

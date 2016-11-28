@@ -16,17 +16,9 @@
 	padding:.3em;
 }
 
-.challengeSoln p
-{
-	color: #FFE;
-	background:white;
-}
 
-.challengeSoln p:hover
-{
-	color: black;
-	background:white;
-}
+
+
 
 img {
     display: block;
