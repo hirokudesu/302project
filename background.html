@@ -74,7 +74,30 @@
 </mrow>
 </math>
 <!-- end MathToWeb -->
+<div>
+<input type="text" ng-model="binNum">
+<input type="text" ng-model="binBin">
+<input type="text" ng-model="binHex">
+<input type="text" ng-model="binAscii">
+</div>
 
+<div>
+
+<h2> Why are keys hard to crack</h2>
+<p>The function y=2^x grows very quickly, experiment by raising the number of bits
+At 64 bits the amount of time necessary to perform a brute force attack is a long time.
+In modern cryptography we use 512 bit or 1024 bit keys.(Not shown here because of technical
+restrictions)
+<p>How long would it take to permute <input type="number" min="1" max="63" step="1" ng-model="bitCount" ng-change="computeTime()">
+with a processor speed of <input type="number" min="0.1" max="5"  ng-model="GHz" ng-change="computeTime()">  GHz?</p>
+<table ng-init="computeTime()">
+<tr><td>Seconds</td><td>{{timeSeconds}}</td></tr> 
+<tr><td>Hours</td><td>{{timeSeconds/3600}}</td></tr> 
+<tr><td>Days</td><td>{{timeSeconds/(3600*24)}}</td></tr> 
+<tr><td>Years</td><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
+</table>
+
+</div>
                 <h1>Text As Numbers</h1>
 
                 <p>ASCII,UTF-8, generalization of byte stream</p>
@@ -101,7 +124,7 @@
             <h1>Demo</h1>Write some text in textbox:
 
             <form>
-                <input type="text" ng-model="plain" ng-change="changeMessage()"><br>
+                <input type="text" ng-model="plain" ng-change="changeMessage()" ><br>
                 P:<input type="text" ng-model="P"><br>
                 G:<input type="text" ng-model="G"><br>
             </form>
@@ -124,7 +147,7 @@
                 <hr>
 
                 <ul id="navbar">
-                    <li><a href="OTP.hrml">Previous:One Time Pad</a></li>
+                    <li><a href="index.html">Previous:Contents</a></li>
 
                     <li><a href="index.html">Up:Contents</a></li>
 
@@ -148,13 +171,38 @@
 
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope) {
-    $scope.name = "John Doe";
+    $scope.binNum="0"
+    $scope.binBin="00000000"
+    $scope.binHex="00"
+    $scope.binAscii="\\0"
+    $scope.GHz=3.3
+    $scope.bitCount=10;
+    $scope.Math = window.Math;
 
 
     $scope.changeMessage = function() {
         $scope.hexPlain = $scope.plain.hexEncode();
       };
+    
+    $scope.computeTime = function() {
+    	var b =$scope.bitCount
+    	var s =$scope.GHz;
+    	var p= Math.log2(s);
+    	
+    	//normalize
+    	b = b >> p;
+    	s = s /Math.pow(2,p);
+    	
+    	//compute time
+        $scope.timeSeconds = Math.pow(2,$scope.bitCount) /( $scope.GHz* Math.pow(10,9));
+        return $scope.timeSeconds;
+      };
+    
+    
+    
     });
+    
+    
 
     </script><script type="text/javascript">
 //console.log("0xF1" + data.charCodeAt(0).toString(16));
