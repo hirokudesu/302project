@@ -81,3 +81,21 @@ function eratosthenes(n) {
 
     return output;
 };
+
+
+
+///Mod inverse from
+// http://stackoverflow.com/questions/26985808/calculating-the-modular-inverse-in-javascript
+ function xgcd(a, b) { 
+
+   if (b == 0) {
+     return [1, 0, a];
+   }
+
+   temp = xgcd(b, a % b);
+   x = temp[0];
+   y = temp[1];
+   d = temp[2];
+   return [y, x-y*Math.floor(a/b), d];
+ }
+ 
