@@ -7,6 +7,27 @@
 	width:100%;
 }
 
+.challengeSoln
+{
+	color: $FFE;
+	background:#FFE;
+	border: solid black 1px;
+	width:40%;
+	padding:.3em;
+}
+
+.challengeSoln p
+{
+	color: #FFE;
+	background:white;
+}
+
+.challengeSoln p:hover
+{
+	color: black;
+	background:white;
+}
+
 img {
     display: block;
     margin-left: auto;

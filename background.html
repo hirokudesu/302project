@@ -84,18 +84,32 @@
 <div>
 
 <h2> Why are keys hard to crack</h2>
-<p>The function y=2^x grows very quickly, experiment by raising the number of bits
+<p>For a binary string (a string with combinatorial family {0,1}, the  number of possible permutations of length n is 2^n. 
+The function y=2^x grows very quickly, experiment by raising the number of bits in the demo below.
 At 64 bits the amount of time necessary to perform a brute force attack is a long time.
-In modern cryptography we use 512 bit or 1024 bit keys.(Not shown here because of technical
+In modern cryptography we use 256 bit or 512 bit keys.(Not shown here because of technical
 restrictions)
-<p>How long would it take to permute <input type="number" min="1" max="63" step="1" ng-model="bitCount" ng-change="computeTime()">
-with a processor speed of <input type="number" min="0.1" max="5"  ng-model="GHz" ng-change="computeTime()">  GHz?</p>
+<p>How long would it take to permute <input type="number" min="1" max="127" step="1" ng-model="bitCount" ng-change="computeTime()">
+bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?</p>
 <table ng-init="computeTime()">
 <tr><td>Seconds</td><td>{{timeSeconds}}</td></tr> 
 <tr><td>Hours</td><td>{{timeSeconds/3600}}</td></tr> 
 <tr><td>Days</td><td>{{timeSeconds/(3600*24)}}</td></tr> 
 <tr><td>Years</td><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
 </table>
+
+<div>
+<h3>Challenge Question</h3>
+<p>Suggest a reason why 64 bits is insufficient if it would take {{(_computeTime(64,GHz)/(3600*24*365)).toFixed(2)}} years to decrypt.
+Are 80 bits enough?  Why/Why not?</p>
+<div class="challengeSoln">
+<p> 80 bits is good enough.  If the entire load of the fastest 
+super computer in the world to compute this were brute forcing, it would still take about 
+2 years.  The combined computing power of several super computers could decrypt faster.
+But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
+It start to take eons for conventional computers.</p>
+</div>
+</div>
 
 </div>
                 <h1>Text As Numbers</h1>
@@ -151,7 +165,7 @@ with a processor speed of <input type="number" min="0.1" max="5"  ng-model="GHz"
 
                     <li><a href="index.html">Up:Contents</a></li>
 
-                    <li><a href="RSA.html">Next: RSA</a></li>
+                    <li><a href="OTP.html">Next: One Time Pad</a></li>
                 </ul>
             </div>
         </div>
@@ -175,7 +189,7 @@ with a processor speed of <input type="number" min="0.1" max="5"  ng-model="GHz"
     $scope.binBin="00000000"
     $scope.binHex="00"
     $scope.binAscii="\\0"
-    $scope.GHz=3.3
+    $scope.GHz=2.2
     $scope.bitCount=10;
     $scope.Math = window.Math;
 
@@ -185,18 +199,32 @@ with a processor speed of <input type="number" min="0.1" max="5"  ng-model="GHz"
       };
     
     $scope.computeTime = function() {
-    	var b =$scope.bitCount
-    	var s =$scope.GHz;
+    	var b =$scope.bitCount;
+     	var s =$scope.GHz;
+
+//     	
+//     	//normalize
+//     	b-= Math.floor(p);
+//     	for(var i=1;i<p;i++)
+//     		s /=2;
+    	
+    	//compute time
+        $scope.timeSeconds = $scope._computeTime(b,s);
+        return $scope.timeSeconds;
+      };
+    $scope._computeTime=function(b,s){
+    	
     	var p= Math.log2(s);
     	
     	//normalize
-    	b = b >> p;
-    	s = s /Math.pow(2,p);
+    	b-= Math.floor(p);
+    	for(var i=1;i<p;i++)
+    		s /=2;
     	
     	//compute time
-        $scope.timeSeconds = Math.pow(2,$scope.bitCount) /( $scope.GHz* Math.pow(10,9));
-        return $scope.timeSeconds;
-      };
+        return Math.pow(2,b) /( s* Math.pow(10,9));
+        
+    }
     
     
     
