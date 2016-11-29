@@ -5,8 +5,10 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript"
 		src="angular.js"></script>
-	<script type="text/javascript" src="numbertheory.js"></script>
 	<script type="text/javascript" src="BigInt.js"></script>
+	<script type="text/javascript" src="RSA.js"></script>
+	<!--<script type="text/javascript" src="numbertheory.js"></script>-->
+	
 
 </head>
 <body>
@@ -74,7 +76,7 @@
 	<!--P:<input type="text" ng-model="P" ><br>-->
 	<!--G:<input type="text" ng-model="Q" ><br>-->
 	
-	<button type="button" ng-click="computeKeys()">Compute Keys</button>
+	<button type="button" ng-click="computeKeys()" ng-init="computeKeys()">Compute Keys</button>
 	
 	<ul>
 	<li>N ={{P*Q}}=pq={{P}}*{{Q}}
@@ -147,7 +149,7 @@
 	<p ng-model="plain" > {{plain}}</p>
 	
 	<h2>Plain(hex)</h2>
-	<p ng-model="hexPlain" > {{hexPlain}}</p>
+	<p ng-model="hexPlain" >Hex {{hexPlain}}</p>
 	<p >Crypt {{ hexCrypt }}</p>
 	<p >Hello {{ hexCrypt }}</p>
 	</div>
@@ -172,160 +174,50 @@
 
 <script type="text/javascript">
 
-String.prototype.hexEncode = function(){
-    var hex, i;
-
-    var result = "";
-    for (i=0; i<this.length; i++) {
-        hex = this.charCodeAt(i).toString(16);
-        result += (" "+hex).slice(-4);
-    }
-
-    return result
-}
- 
-
-
-String.prototype.unpack=function() {
-	var str=this;
-    var bytes = [];
-    for(var i = 0, n = str.length; i < n; i++) {
-        var char = str.charCodeAt(i);
-        bytes.push(char);
-    }
-    return bytes;
-}
-
-
-
-
-
-
-//returns the first coprime integer found
-function findCoprime(n)
-{
-	//Euler's method
-	return coprime(n);
-}
-
-//returns x for ax= 1 mod(base)
-function modMultiplicativeInverse(a,base)
-{
-	//Extended Euler's thm
-	//alert("Please implement modMultiplicativeInverse(a,base)");
-	candidates =xgcd(a,base);
-	for (i in candidates)
-	{
-		if (candidates[i] >1)
-			return candidates[i];
-	}
-	return NaN;
-	
-		
-}
 
 function encrypt(M,e,n)
 {
-	M=M.unpack();
-	//zero pad
-	// missing = M.length %4;
-// 	for(var i=0;i<missing;i++)
-// 	{
-// 		M.push(0);
-// 	}
-// 	
-// 	var ints=[];
-// 	for(var i=0;i<M.length;i+=4)
-// 	{
-// 		ints.push(int32Cast(M,i));
-// 	}
-	var ints =M;
-	var C = [];
-	e=int2bigInt(e,32,8);
-	n=int2bigInt(n,32,8);
-	for(var i=0;i<ints.length;i++)
-	{
-		var c = int2bigInt(ints[i],32,8);
-		C[i]= bigInt2str(powMod(c,e,n),16);
-	}
-	return C;
-	
-//C = M^e mod n
-//You might need bigint.js for this, use modexp
+	var s = RSA.encrypt(M,e,n).toString(16);
+	return s;
 }
 
 function decrypt(C,d,n)
 {
-	crypt = C.split(" ");
-	d=int2bigInt(d,32,8);
-	n=int2bigInt(n,32,8);
-	
-    hexStr=[]
-    for(var i=0;i<crypt.length;i++)
-	{
-		var c = int2bigInt(parseInt("0x"+crypt[i]),32,8);
-		hexStr[i]= bigInt2str(powMod(c,d,n),16);
-	}
-	return hexStr;
+	return bigInt(C,16).modPow(d,n).toString(16); 
 }
 
-//From : http://stackoverflow.com/questions/15761790/convert-a-32bit-integer-into-4-bytes-of-data-in-javascript
-function toBytesInt32 (num) {
-    arr = new ArrayBuffer(4); // an Int32 takes 4 bytes
-    view = new DataView(arr);
-    view.setUint32(0, num, false); // byteOffset = 0; litteEndian = false
-    return arr;
-}
 
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope) {
     $scope.name = "John Doe";
-    $scope.P=11
-    $scope.Q=31
-    // $scope.P=1159523
-//     $scope.Q=117
+    //$scope.P=11
+    //$scope.Q=31
+    $scope.P=1159523
+    $scope.Q=117
     $scope.e="?"
     $scope.d="?"
     $scope.n="?"
     $scope.phi="?"
     $scope.computeKeys = function() {
-			$scope.n= $scope.P * $scope.Q
-			$scope.phi= ($scope.P -1)*($scope.Q-1)
-		
-			//gcd(phi,e)==1
-			//The likelihood that a uniformly sampled 
-			//number is coprime to phi is 60%
-			//The random number should be less than phi
-		
-			const MAX_ATTEMPTS =5000;
-			for(var i=0;i<MAX_ATTEMPTS;i++)
-			{
-				$scope.e = findCoprime($scope.phi);
-				//ed ≡ 1 (mod φ(n))
-				$scope.d = modMultiplicativeInverse($scope.e,$scope.phi);
-				if( !isNaN($scope.d) )
-					break;
-			}
-		
-			if(isNaN($scope.d))
-			{
-				alert("Generating key failed, this is statistically rare, feel free to try again");
-			}
+    
+    		var o= RSA.generate();
+    		
+    		$scope.P= o.p;
+    		$scope.Q= o.q;
+    		$scope.d= o.d;
+    		$scope.e= o.e;
+    		$scope.n= o.n;
+    		$scope.phi= o.phi;
+			
       };
     
     
     $scope.changeMessage = function() 
     {
-    	$scope.hexPlain = $scope.plain.hexEncode();
+    	//$scope.hexPlain = $scope.plain.hexEncode();
     	var crypt =  encrypt($scope.plain,$scope.e,$scope.n)
-    	
-    	var hexcrypt="";
-    	for (i in crypt)
-    	{
-    		hexcrypt+=crypt[i]+" ";
-    	}
-    	
-        $scope.hexCrypt = hexcrypt
+    	$scope.hexPlain= Number($scope.plain).toString(16);
+        $scope.hexCrypt = crypt;
         //$scope.hexPlain = $scope.plain.hexEncode();
         
     };
@@ -336,17 +228,6 @@ app.controller('myCtrl', function($scope) {
     	var plain =  decrypt(cipherText,$scope.d,$scope.n)
     	
     	$scope.plainOut=plain;
-    	// bytes =[];
-//     	
-//     	for(var i=0;i<cipherText.length/4;i++)
-//     	{
-//     		byteBlock = cipherText.substring(i,i+8);
-//     		integer = parseInt("0x"+byteBlock);
-//     		bytes.push(toBytesInt32(integer));
-//     	}
-    	
-    	
-        //$scope.hexPlain = $scope.plain.hexEncode();
         
     };
     
