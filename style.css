@@ -23,12 +23,42 @@
 	margin:1.5em;
 }
 
+.page
+{
+	background-color:#FFE;
+	
+	border-left:solid 2px #FDFDDD;
+	border-bottom:solid 3px #DDD;
+	
+	border-right:solid 1px #EEE;
+	border-top:solid 1px #FDFDDD;
+	
+	
+	margin:1em ;
+	padding-left:1em;
+	padding-right:1em;
+}
 
+.equation
+{
+	font: 16pt;
+	padding-left:1pt;
+}
+
+textarea
+{
+	width:100%;
+}
 
 img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+body
+{
+	background: #F8F8FF
 }
 
 #navbar li
@@ -38,10 +68,10 @@ img {
 
 #navbar  {
     list-style-type: none;
-    margin: 0;
+
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+
 }
 
 #navbar li {
@@ -50,7 +80,7 @@ img {
 
 #navbar li a {
     display: block;
-    color: white;
+
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;

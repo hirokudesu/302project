@@ -22,9 +22,12 @@
 	<h1> Demo </h1>
 	
 	Write some text in textbox:
+	
+	<form>
 	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
 	P:<input type="text" ng-model="P" ><br>
 	G:<input type="text" ng-model="G" ><br>
+	</form>
 	<!-- base 26 OTP -- >
 	<!--- generalization of otp-->
 	<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>

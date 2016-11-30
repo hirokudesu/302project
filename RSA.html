@@ -12,175 +12,194 @@
 
 </head>
 <body>
-<div>
-	<div>
-	<h1> RSA Encryption Scheme </h1>
-	<p> [Introduction goes here] </p>
-	</div>
+<div class="container">
+<div class="page">
 	
 	<div>
-	<h2>Public numbers</h2>
-	<p>Public numbers are agreed upon at the start of the transaction. 
-	 They are sent in the clear so anyone can see them.</p>
-	<ul>
-	<li>P:An arbitrary large prime number</li>
-	<li>Q:An arbitrary large prime number</li>
-	</ul>
+		<h1> RSA Encryption Scheme </h1>
+		<p> [Introduction goes here] </p>
 	</div>
 	
 	<div>
-	<h2>Numbers Alice Knows</h2>
-	<ul>
-	<li>P: It's public</li>
-	<li>Q: It's public</li>
-	<li>Xa: Alice's <u>private key</u> is a randomly generated number only she knows.</li>
-	</ul>
+		<h2>Public numbers</h2>
+		<p>Public numbers are agreed upon at the start of the transaction. 
+		 They are sent in the clear so anyone can see them.</p>
+		<ul>
+		<li>P:An arbitrary large prime number</li>
+		<li>Q:An arbitrary large prime number</li>
+		</ul>
 	</div>
 	
 	<div>
-	<h2>Numbers Bob Knows</h2>
-	<ul>
-	<li>P: It's public</li>
-	<li>Q: It's public</li>
-	</ul>
+		<h2>Numbers Alice Knows</h2>
+		<ul>
+		<li>P: It's public</li>
+		<li>Q: It's public</li>
+		<li>Xa: Alice's <u>private key</u> is a randomly generated number only she knows.</li>
+		</ul>
 	</div>
 	
 	<div>
-	<h2> Public generated numbers</h2>
+		<h2>Numbers Bob Knows</h2>
+		<ul>
+		<li>P: It's public</li>
+		<li>Q: It's public</li>
+		</ul>
+	</div>
 	
-	<p>In RSA, both parties don't have to be communicating to establish the key, because
-	the secret is not shared.  This means only Alice generates which she shares with Bob.
-	Bob can encrypt a secret to send to Alice, but not decrypt messages intended for Alice.</p>
+	<div>
+		<h2> Public generated numbers</h2>
+	
+		<p>In RSA, both parties don't have to be communicating to establish the key, because
+		the secret is not shared.  This means only Alice generates which she shares with Bob.
+		Bob can encrypt a secret to send to Alice, but not decrypt messages intended for Alice.</p>
 	
 	</div>
+	
+	
+	<div>
+	
+		<h2> Private generated numbers</h2>
+		<p>Using the private data and shared data both parties generate new shared data</p>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+		<p>K<sub>a</sub>=Y<sub>b</sub><sup>X<sub>a</sub></sup> (mod P)</p>
+		<p>K<sub>b</sub>=Y<sub>a</sub><sup>X<sub>b</sub></sup> (mod P)</p>
+		<p>K<sub>a</sub>=K<sub>b</sub></p>
+		</math>
+	
 	
 	</div>
 	
 	<div>
-	
-	<h2> Private generated numbers</h2>
-	
-	<p>Using the private data and shared data both parties generate new shared data</p>
-	
-	<p>Ka=(Yb^Xa) mod P</p>
-	<p>Kb=(Ya^Xb) mod P</p>
-	<p>Ka=Kb</p>
-	</div>
-	
-	</div>
-	<h1> Demo </h1>
+		<h1> Demo </h1>
 	
 
 	
-	<!--Probably not a good idea to just elt people change these-->
-	<!--P:<input type="text" ng-model="P" ><br>-->
-	<!--G:<input type="text" ng-model="Q" ><br>-->
+		<!--Probably not a good idea to just elt people change these-->
+		<!--P:<input type="text" ng-model="P" ><br>-->
+		<!--G:<input type="text" ng-model="Q" ><br>-->
 	
-	<button type="button" ng-click="computeKeys()" ng-init="computeKeys()">Compute Keys</button>
+		<button type="button" ng-click="computeKeys()" ng-init="computeKeys()">Compute Keys</button>
 	
-	<ul>
-	<li>N ={{P*Q}}=pq={{P}}*{{Q}}
-	<li>E ={{e}}=coprime(φ(n))
-	<li>D ={{d}}=modularInverse(E,φ(n))
-	</ul>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+		<ul>
+		<li>N ={{P*Q}}=pq={{P}}*{{Q}}
+		<li>E ={{e}}=coprime(φ(n))
+		<li>D ={{d}}=modularInverse(E,φ(n))
+		</ul>
+		</math>
 	
-	<table>
-	<tbody>
+		<table>
+		<tbody>
 	
-	<tr>
-		<td>
-		P
-		</td>
-		<td>
-		{{P}}
-		</td>
-	</tr>
+		<tr>
+			<td>
+			P
+			</td>
+			<td>
+			{{P}}
+			</td>
+		</tr>
 	
-	<tr>
-		<td>
-		Q
-		</td>
-		<td>
-		{{Q}}
-		</td>
-	</tr>
+		<tr>
+			<td>
+			Q
+			</td>
+			<td>
+			{{Q}}
+			</td>
+		</tr>
 	
-	<tr>
-		<td>
-		N
-		</td>
-		<td>
-		{{n}}
-		</td>
-	</tr>
+		<tr>
+			<td>
+			N
+			</td>
+			<td>
+			{{n}}
+			</td>
+		</tr>
 	
-	<tr>
-		<td>
-		φ(n)
-		</td>
-		<td>
-		{{phi}}
-		</td>
-	</tr>
+		<tr>
+			<td>
+			φ(n)
+			</td>
+			<td>
+			{{phi}}
+			</td>
+		</tr>
 	
-	<tr>
-		<td>
-		E
-		</td>
-		<td>
-		{{e}}
-		</td>
-	</tr>
-	<tr>
-		<td>
-		D
-		</td>
-		<td>
-		{{d}}
-		</td>
-	</tr>
-	</tbody>
-	</table>
-	<div>
-		Write some text in textbox:
-	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
-	
-	<h2>Plain</h2>
-	<p ng-model="plain" > {{plain}}</p>
-	
-	<h2>Plain(hex)</h2>
-	<p ng-model="hexPlain" >Hex {{hexPlain}}</p>
-	<p >Crypt {{ hexCrypt }}</p>
-	<p >Hello {{ hexCrypt }}</p>
-	</div>
-	
-	<div>
-	<h2> Decrypt </h2>
-		<input type="text" ng-model="hexCryptIn" ng-change="changeCrypt()" /><br>
+		<tr>
+			<td>
+			E
+			</td>
+			<td>
+			{{e}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+			D
+			</td>
+			<td>
+			{{d}}
+			</td>
+		</tr>
+		</tbody>
+		</table>
 		
-		<h3>Hex </h3>
-		<div class="output">
-		<p> {{hexOut}} </p>
-		</div>
-		
-		<h3>Plain text </h3>
-		<div class="output">
-		<p> {{plainOut}} </p>
+		<div>
+			Write some text in textbox:
+			<br>
+			<div>
+			<textarea  type="text" ng-model="plain" ng-change="changeMessage()" >
+			Put text you want to encrypt here.
+			</textarea>
+			</div>
+			<br>
+	
+			<h2>Plain</h2>
+			<p ng-model="plain" > {{plain}}</p>
+	
+			<h2>Plain(hex)</h2>
+			<p ng-model="hexPlain" >Hex {{hexPlain}}</p>
+			<p >Crypt {{ hexCrypt }}</p>
+			<p >Hello {{ hexCrypt }}</p>
 		</div>
 	
-	</div>
+		<div>
+			<h2> Decrypt </h2>
+			<input type="text" ng-model="hexCryptIn" ng-change="changeCrypt()" /><br>
+		
+			<h3>Hex </h3>
+			<div class="output">
+			<p> {{hexOut}} </p>
+			</div>
+		
+			<h3>Plain text </h3>
+			<div class="output">
+			<p> {{plainOut}} </p>
+			</div>
+		</div><!--End Decrypt-->
+	</div> <!--End Demo-->
 	
-	</div>
-	
-	<div>
+	<!-- Begin navbar-->
+	<div id="navbar">
 	<hr>
-	<ul id="navbar">
+	<ul>
 	<li><a href="DH.html">Previous:Diffie Hellman</a></li>
 	<li><a href="index.html">Up:Contents </a></li>
-	
+
 	</ul>
 	</div>
 	
+</div> <!--end page-->
+
+
+
+
+
+
+</div> <!--end container-->
 </body>
 
 <script type="text/javascript">
