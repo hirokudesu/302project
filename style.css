@@ -16,7 +16,12 @@
 	padding:.3em;
 }
 
-
+.output
+{
+	border:solid 1px;
+	padding:12pt;
+	margin:1.5em;
+}
 
 
 

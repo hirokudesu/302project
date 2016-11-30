@@ -155,8 +155,19 @@
 	</div>
 	
 	<div>
-	<input type="text" ng-model="hexCryptIn" ng-change="changeCrypt()" /><br>
-	<p> {{plainOut}} </p>
+	<h2> Decrypt </h2>
+		<input type="text" ng-model="hexCryptIn" ng-change="changeCrypt()" /><br>
+		
+		<h3>Hex </h3>
+		<div class="output">
+		<p> {{hexOut}} </p>
+		</div>
+		
+		<h3>Plain text </h3>
+		<div class="output">
+		<p> {{plainOut}} </p>
+		</div>
+	
 	</div>
 	
 	</div>
@@ -183,7 +194,7 @@ function encrypt(M,e,n)
 
 function decrypt(C,d,n)
 {
-	return bigInt(C,16).modPow(d,n).toString(16); 
+	return bigInt(C).modPow(d,n).toJSNumber(); 
 }
 
 
@@ -215,19 +226,54 @@ app.controller('myCtrl', function($scope) {
     $scope.changeMessage = function() 
     {
     	//$scope.hexPlain = $scope.plain.hexEncode();
-    	var crypt =  encrypt($scope.plain,$scope.e,$scope.n)
-    	$scope.hexPlain= Number($scope.plain).toString(16);
-        $scope.hexCrypt = crypt;
-        //$scope.hexPlain = $scope.plain.hexEncode();
+    	
+    	
+    	var s=$scope.plain;
+    	var bytes=[];
+    	var crypt=[]
+    	for (var i =0; i< s.length;i++)
+    	{
+    		bytes[i]=s.codePointAt(i);
+    	}
+
+
+    	
+    	//
+    	s="";
+    	se="";
+    	for (var i =0; i< bytes.length;i++)
+    	{
+    		s+= bytes[i].toString(16) +" ";
+    		crypt[i] = encrypt(bytes[i],$scope.e,$scope.n);
+    		se+= crypt[i].toString(16)+" ";
+    	}
+    	$scope.hexPlain=s;
+    	$scope.hexCrypt=se;
+    	
+    	
         
     };
     
     $scope.changeCrypt = function() 
     {
     	var cipherText = $scope.hexCryptIn;
-    	var plain =  decrypt(cipherText,$scope.d,$scope.n)
+    	var s = "";
+    	var bytes = cipherText.split(" ");
     	
-    	$scope.plainOut=plain;
+    	var plainBytes=[];
+		for (var i =0; i< bytes.length;i++)
+    	{
+    		plainBytes[i] = decrypt( parseInt(bytes[i],16),$scope.d,$scope.n);
+    		s+= plainBytes[i].toString(16) +" ";
+    	}
+    	$scope.hexOut=s;
+    	
+    	s="";
+    	for (var i =0; i< plainBytes.length;i++)
+    	{
+    		s+= String.fromCodePoint(plainBytes[i]);
+    	}
+    	$scope.plainOut=s;
         
     };
     

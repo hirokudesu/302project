@@ -61,8 +61,8 @@ RSA.generate = function(){
     }
 
     // generate values
-    var p = random_prime(1, 255), // 8 bit
-        q = random_prime(1, 255), // 8 bit
+    var p = random_prime(22, 255), // 8 bit
+        q = random_prime(51, 255), // 8 bit
         n = p * q,
         t = (p - 1) * (q - 1), // totient as φ(n) = (p − 1)(q − 1)
         e = random_prime(1, t),
