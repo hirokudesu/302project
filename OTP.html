@@ -124,7 +124,7 @@ app.controller('myCtrl', function($scope) {
     	for (var i =0; i< s.length;i++)
     	{
     		bytes[i]=s.codePointAt(i);
-    		crypt[i]= s.codePointAt(i) ^ p[i % $scope.pad.length];
+    		crypt[i]= s.codePointAt(i) ^ p[i % p.length];
     	}
 
     	s="";
@@ -152,20 +152,25 @@ app.controller('myCtrl', function($scope) {
     	
     	var s=$scope.hexIn.split(" ");
     	var p=$scope.padIn.split(" ");
+    	p.pop();
     	var bytes=[];
     	var pad=[];
     	
     	for (var i =0; i< s.length;i++)
     	{
     		bytes[i]=parseInt(s[i],16);
-    		pad[i]=parseInt(p[i % p.length],16);
+    	}
+    	
+    	for(var i=0;i< p.length;i++)
+    	{
+    		pad[i]=parseInt(p[i],16);
     	}
 
     	var sPlain="";
     	var s="";
     	for (var i =0; i< bytes.length;i++)
     	{
-    		var plainByte = bytes[i] ^ pad[i % p.length];
+    		var plainByte = bytes[i] ^ pad[i%pad.length];
     		s+= plainByte.toString(16) +" ";
     		sPlain+= String.fromCodePoint(plainByte);
     	}
