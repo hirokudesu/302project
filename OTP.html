@@ -7,7 +7,7 @@
 
 </head>
 <body>
-	
+<div class="page">
 	<div>
 	<h1> One Time Pad </h1>
 	<h1> A Pad on +26 over letters<h1>
@@ -17,17 +17,19 @@
 	<p> A XOR B = A +_2 B<p>
 	
 	<div>
-	<form>
-	<input type="text" ng-model="xorChar" ng-change="xorDemo()"></input><br>
-	<input type="text" ng-model="xorPad" ng-change="xorDemo()"></input>
-	</form>
-	<p ng-if="!xorDemoValidate()">Invalid input</p>
-	<table ng-if="xorDemoValidate()">
-	<tr><td>{{xorChar}}</td> <td>{{xorBits}}</td>
-	<tr><td>{{xorPad}}</td> <td>{{xorPadBits}}</td>
-	<tr><td>{{xorChar}} XOR {{xorPad}} = {{xorCrypt}} </td> <td> {{xorCryptBits}}</td>
-	<tr><td>{{xorCrypt}} XOR {{xorPad}} = {{xorChar}} </td> <td> {{xorBits}}</td>
-	</table>
+		<form>
+		<input type="text" ng-model="xorChar" ng-change="xorDemo()"></input><br>
+		<input type="text" ng-model="xorPad" ng-change="xorDemo()"></input>
+		</form>
+	
+		<p class="error" ng-if="!xorDemoValidate()">Invalid input: Please enter a single character in each box</p>
+	
+		<table ng-if="xorDemoValidate()">
+		<tr><td>{{xorChar}}</td> <td>{{xorBits}}</td>
+		<tr><td>{{xorPad}}</td> <td>{{xorPadBits}}</td>
+		<tr><td>{{xorChar}} XOR {{xorPad}} = {{xorCrypt}} </td> <td> {{xorCryptBits}}</td>
+		<tr><td>{{xorCrypt}} XOR {{xorPad}} = {{xorChar}} </td> <td> {{xorBits}}</td>
+		</table>
 	</div>
 	
 	</div>
@@ -68,9 +70,9 @@
 	<li><a href="background.html">Previous:Background</a></li>
 	<li><a href="index.html">Up:Contents </a></li>
 	<li><a href="DH.html"> Next: Diffie Hellman Key Exchange </a></li>
-	<ul></li>
+	</ul>
 	</div>
-	
+</div>
 </body>
 
 <script type="text/javascript">

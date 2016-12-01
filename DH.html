@@ -7,49 +7,51 @@
 
 </head>
 <body>
+<div class="page">
 	
 	<div>
-	<h1> Diffie-Hellman Key Exchange </h1>
-	<p> [Introduction goes here] </p>
+		<h1> Diffie-Hellman Key Exchange </h1>
+		<p> [Introduction goes here] </p>
 	</div>
 	
 	<div>
-	<h2>Public numbers</h2>
-	<p>Public numbers are agreed upon at the start of the transaction. 
-	 They are sent in the clear so anyone can see them.</p>
-	<ul>
-	<li>P:An arbitrary large number</li>
-	<li>G:An arbitrary large number</li>
-	</ul>
+		<h2>Public numbers</h2>
+		<p>Public numbers are agreed upon at the start of the transaction. 
+		 They are sent in the clear so anyone can see them.</p>
+		<ul>
+		<li>P:An arbitrary large number</li>
+		<li>G:An arbitrary large number</li>
+		</ul>
 	</div>
 	
 	<div>
-	<h2>Numbers Alice Knows</h2>
-	<ul>
-	<li>P: It's public</li>
-	<li>G: It's public</li>
-	<li>Xa: Alice's <u>private key</u> is a randomly generated number only she knows.</li>
-	</ul>
+		<h2>Numbers Alice Knows</h2>
+		<ul>
+		<li>P: It's public</li>
+		<li>G: It's public</li>
+		<li>Xa: Alice's <u>private key</u> is a randomly generated number only she knows.</li>
+		</ul>
 	</div>
 	
 	<div>
-	<h2>Numbers Bob Knows</h2>
-	<ul>
-	<li>P: It's public</li>
-	<li>G: It's public</li>
-	<li>Xa: Bob's <u>private key</u> is a randomly generated number only he knows.</li>
-	</ul>
+		<h2>Numbers Bob Knows</h2>
+		<ul>
+		<li>P: It's public</li>
+		<li>G: It's public</li>
+		<li>Xa: Bob's <u>private key</u> is a randomly generated number only he knows.</li>
+		</ul>
 	</div>
 	
 	<div>
-	<h2> Public generated numbers</h2>
+		<h2> Public generated numbers</h2>
 	
-	<p>Using the private data and shared data both parties generate new shared data</p>
+		<p>Using the private data and shared data both parties generate new shared data</p>
 	
-	<ul>
-	<li>Ya=(G^Xa) mod P: Alice's public key is a function of her private key and public information.</li>
-	<li>Yb=(G^Xb) mod P: Alice's public key is a function of her private key and public information</li>
-	</ul>
+		<ul>
+		<li>Ya=(G^Xa) mod P: Alice's public key is a function of her private key and public information.</li>
+		<li>Yb=(G^Xb) mod P: Alice's public key is a function of her private key and public information</li>
+		</ul>
+	</div>
 	
 	<div>
 	Ya --> Bob<br>
@@ -57,46 +59,47 @@
 	
 	</div>
 	
-	</div>
 	
 	<div>
 	
-	<h2> Private generated numbers</h2>
+		<h2> Private generated numbers</h2>
 	
-	<p>Using the private data and shared data both parties generate new shared data</p>
+		<p>Using the private data and shared data both parties generate new shared data</p>
 	
-	<p>Ka=(Yb^Xa) mod P</p>
-	<p>Kb=(Ya^Xb) mod P</p>
-	<p>Ka=Kb</p>
+		<p>Ka=(Yb^Xa) mod P</p>
+		<p>Kb=(Ya^Xb) mod P</p>
+		<p>Ka=Kb</p>
 	</div>
-	
-	</div>
-	<h1> Demo </h1>
-	
-	Write some text in textbox:
-	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
-	P:<input type="text" ng-model="P" ><br>
-	G:<input type="text" ng-model="G" ><br>
-	
-	<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
-	
-	<h2>Plain</h2>
-	<p ng-model="plain" > {{plain}}</p>
-	
-	<h2>Plain(hex)</h2>
-	<p ng-model="hexPlain" > {{hexPlain}}</p>
-	<p >Crypt {{ hexCrypt }}</p>
-	<p >Hello {{ hexCrypt }}</p>
 	
 	<div>
-	<hr>
-	<ul id="navbar">
-	<li><a href="OTP.html">Previous:One Time Pad</a></li>
-	<li><a href="index.html">Up:Contents </a></li>
-	<li><a href="RSA.html"> Next: RSA </a></li>
-	<ul></li>
+		<h1> Demo </h1>
+	
+		Write some text in textbox:
+		<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
+		P:<input type="text" ng-model="P" ><br>
+		G:<input type="text" ng-model="G" ><br>
+	
+		<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
+	
+		<h2>Plain</h2>
+		<p ng-model="plain" > {{plain}}</p>
+	
+		<h2>Plain(hex)</h2>
+		<p ng-model="hexPlain" > {{hexPlain}}</p>
+		<p >Crypt {{ hexCrypt }}</p>
+		<p >Hello {{ hexCrypt }}</p>
 	</div>
 	
+	<div>
+		<hr>
+		<ul id="navbar">
+		<li><a href="OTP.html">Previous:One Time Pad</a></li>
+		<li><a href="index.html">Up:Contents </a></li>
+		<li><a href="RSA.html"> Next: RSA </a></li>
+		</ul>
+	</div>
+
+</div>
 </body>
 
 <script type="text/javascript">

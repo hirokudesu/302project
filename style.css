@@ -1,3 +1,49 @@
+textarea
+{
+	width:100%;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:95%;
+}
+
+body
+{
+	background-image: url(/img/bg.jpg);
+	/*background: #F8F8FF;*/
+}
+
+p
+{
+	margin-left:.5em;
+}
+
+table
+{
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+
+	margin-left:.5em;
+}
+
+table, td, th
+{
+	border: 1px solid Tan;
+	padding:.5em;
+	border-collapse:collapse;
+}
+
+th
+{
+	text-align:centre;
+	font-weight:bold;
+	width:30%;
+}
+
 
 
 .caption
@@ -27,16 +73,17 @@
 {
 	background-color:#FFE;
 	
-	border-left:solid 2px #FDFDDD;
-	border-bottom:solid 3px #DDD;
+	border-left:ridge 2px #FDFDDD;
+	border-bottom:ridge 3px #DDD;
 	
 	border-right:solid 1px #EEE;
-	border-top:solid 1px #FDFDDD;
+	border-top:ridge 2px #FDFDDD;
 	
 	
-	margin:1em ;
+	margin:2em ;
 	padding-left:1em;
 	padding-right:1em;
+	min-height:11in;
 }
 
 .equation
@@ -45,21 +92,13 @@
 	padding-left:1pt;
 }
 
-textarea
+.error
 {
-	width:100%;
+	text-decoration:underline;
+	color:red;
 }
 
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
 
-body
-{
-	background: #F8F8FF
-}
 
 #navbar li
 {

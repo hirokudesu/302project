@@ -99,10 +99,10 @@ restrictions)
 bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?
 (Numbers approximate due to low javascript machine precision)</p>
 <table ng-init="computeTime()">
-<tr><td>Seconds</td><td>{{timeSeconds}}</td></tr> 
-<tr><td>Hours</td><td>{{timeSeconds/3600}}</td></tr> 
-<tr><td>Days</td><td>{{timeSeconds/(3600*24)}}</td></tr> 
-<tr><td>Years</td><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
+<tr><th>Seconds</th><td>{{timeSeconds}}</td></tr> 
+<tr><th>Hours</th><td>{{timeSeconds/3600}}</td></tr> 
+<tr><th>Days</th><td>{{timeSeconds/(3600*24)}}</td></tr> 
+<tr><th>Years</th><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
 </table>
 
 <div>
