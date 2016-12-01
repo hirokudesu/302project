@@ -59,7 +59,6 @@ RSA.generate = function(){
             return random_prime(min, max);   
         } 
     }
-
     // generate values
     var p = random_prime(22, 255), // 8 bit
         q = random_prime(51, 255), // 8 bit

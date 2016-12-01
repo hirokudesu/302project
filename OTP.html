@@ -14,7 +14,21 @@
 	<h1> Logical XOR as is +_2 on Z_2 </h1>
 	<h2> Generalization over strings</h2>
 	<p> bitwise logical xor</p>
+	<p> A XOR B = A +_2 B<p>
 	
+	<div>
+	<form>
+	<input type="text" ng-model="xorChar" ng-change="xorDemo()"></input><br>
+	<input type="text" ng-model="xorPad" ng-change="xorDemo()"></input>
+	</form>
+	<p ng-if="!xorDemoValidate()">Invalid input</p>
+	<table ng-if="xorDemoValidate()">
+	<tr><td>{{xorChar}}</td> <td>{{xorBits}}</td>
+	<tr><td>{{xorPad}}</td> <td>{{xorPadBits}}</td>
+	<tr><td>{{xorChar}} XOR {{xorPad}} = {{xorCrypt}} </td> <td> {{xorCryptBits}}</td>
+	<tr><td>{{xorCrypt}} XOR {{xorPad}} = {{xorChar}} </td> <td> {{xorBits}}</td>
+	</table>
+	</div>
 	
 	</div>
 	
@@ -24,21 +38,29 @@
 	Write some text in textbox:
 	
 	<form>
-	<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
-	P:<input type="text" ng-model="P" ><br>
-	G:<input type="text" ng-model="G" ><br>
+	<input type="text" ng-model="plain" ng-change="changeMessage()">Message</input><br>
+	<input type="text" ng-model="padLength" ng-change="generatePad()" ng-init="generatePad()"> Pad Length</input>
 	</form>
 	<!-- base 26 OTP -- >
 	<!--- generalization of otp-->
-	<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
+	<h1>Encrypt</h1>
 	
 	<h2>Plain</h2>
 	<p ng-model="plain" > {{plain}}</p>
-	
 	<h2>Plain(hex)</h2>
 	<p ng-model="hexPlain" > {{hexPlain}}</p>
-	<p >Crypt {{ hexCrypt }}</p>
-	<p >Hello {{ hexCrypt }}</p>
+	<h2>Pad</h2>
+	<p>{{hexPad}}</p>
+	<p>Crypt {{ hexCrypt }}</p>
+	
+	<h1>Decrypt</h1>
+	<form>
+	<input type="text" ng-model="hexIn" ng-change="decrypt()">Ciphertext</input><br>
+	<input type="text" ng-model="padIn" ng-change="decrypt()">Pad</input>
+	<input type="button" ng-click="padIn=hexPad" value="Copy pad from above"></input>
+	</form>
+	<p>{{outHex}}</p>
+	<p>{{outPlain}}</p>
 	
 	<div>
 	<hr>
@@ -53,26 +75,130 @@
 
 <script type="text/javascript">
 
-String.prototype.hexEncode = function(){
-    var hex, i;
 
-    var result = "";
-    for (i=0; i<this.length; i++) {
-        hex = this.charCodeAt(i).toString(16);
-        result += (" "+hex).slice(-4);
-    }
+//return integer between 0 and n inclusive
+function randInt(n)
+{
+	return Math.floor((Math.random() * n) + 1);
+}
 
-    return result
+function zeroPadString(s,n)
+{
+	const b= n- s.length;
+	var prefix="";
+	for(var i=0;i<b;i++)
+	{
+		prefix+="0";
+	}
+	return prefix+s;
 }
 
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope) {
-    $scope.name = "John Doe";
     
     
-    $scope.changeMessage = function() {
-        $scope.hexPlain = $scope.plain.hexEncode();
-      };
+    
+    $scope.padLength=10;
+    $scope.pad=[0];
+    
+    $scope.generatePad= function()
+    {
+    	var bytes=[];
+    	
+    	$scope.hexPad="";
+    	for(var i=0; i< $scope.padLength;i++)
+    	{
+    		bytes[i]=randInt(255);
+    		$scope.hexPad += bytes[i].toString(16) +" ";
+    	}
+    	
+    	$scope.pad=bytes;
+    }
+    
+    $scope.changeMessage = function() 
+    {
+    	var s=$scope.plain;
+    	var p=$scope.pad;
+    	var bytes=[];
+    	var crypt=[];
+    	for (var i =0; i< s.length;i++)
+    	{
+    		bytes[i]=s.codePointAt(i);
+    		crypt[i]= s.codePointAt(i) ^ p[i % $scope.pad.length];
+    	}
+
+    	s="";
+    	sp="";
+    	se="";
+    	for (var i =0; i< bytes.length;i++)
+    	{
+    		s+= bytes[i].toString(16) +" ";
+    		se+= crypt[i].toString(16)+" ";
+    	}
+    	$scope.hexPlain=s;
+    	$scope.hexCrypt=se;
+    	
+    	
+        
+    };
+    
+    $scope.decrypt = function() 
+    {
+    	if ($scope.pad == null || $scope.pad.length ==0)
+    	{
+    		Console.log("empty pad");
+    		return;
+    	}
+    	
+    	var s=$scope.hexIn.split(" ");
+    	var p=$scope.padIn.split(" ");
+    	var bytes=[];
+    	var pad=[];
+    	
+    	for (var i =0; i< s.length;i++)
+    	{
+    		bytes[i]=parseInt(s[i],16);
+    		pad[i]=parseInt(p[i % p.length],16);
+    	}
+
+    	var sPlain="";
+    	var s="";
+    	for (var i =0; i< bytes.length;i++)
+    	{
+    		var plainByte = bytes[i] ^ pad[i];
+    		s+= plainByte.toString(16) +" ";
+    		sPlain+= String.fromCodePoint(plainByte);
+    	}
+    	$scope.outPlain=sPlain;
+    	$scope.outHex=s;
+    };
+    
+    $scope.xorDemoValidate= function()
+    {
+    	var a =$scope.xorChar;
+    	var b =$scope.xorPad;
+    	return a !=null && b !=null &&a.length ==1 && b.length ==1;
+    }
+    
+    $scope.xorDemo= function()
+    {
+    	if(!$scope.xorDemoValidate())
+    	{
+    		return;
+    	}
+    	var a=$scope.xorChar.codePointAt(0);
+    	var b=$scope.xorPad.codePointAt(0);
+    	
+    	$scope.xorBits = zeroPadString(a.toString(2),8);
+    	$scope.xorPadBits = zeroPadString(b.toString(2),8);
+    	
+    	$scope.xorCrypt = a^b;
+    	$scope.xorCryptBits = zeroPadString($scope.xorCrypt.toString(2),8);
+    	
+    	
+    }
+    
+    
 });
 
 </script>

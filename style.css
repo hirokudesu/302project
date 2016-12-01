@@ -63,11 +63,11 @@ body
 
 #navbar li
 {
-	display: block;
+	/*display: block;*/
 }
 
 #navbar  {
-    list-style-type: none;
+    /*list-style-type: disc;*/
 
     padding: 0;
     overflow: hidden;
@@ -75,13 +75,15 @@ body
 }
 
 #navbar li {
-    float: left;
+	margin-top:.5em;
+    /*float: left;
+    */
 }
 
 #navbar li a {
-    display: block;
+   /* display: block;*/
 
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
