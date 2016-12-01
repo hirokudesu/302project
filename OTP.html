@@ -57,7 +57,7 @@
 	<form>
 	<input type="text" ng-model="hexIn" ng-change="decrypt()">Ciphertext</input><br>
 	<input type="text" ng-model="padIn" ng-change="decrypt()">Pad</input>
-	<input type="button" ng-click="padIn=hexPad" value="Copy pad from above"></input>
+	<input type="button" ng-click="padIn=hexPad;decrypt()" value="Copy pad from above"></input>
 	</form>
 	<p>{{outHex}}</p>
 	<p>{{outPlain}}</p>
@@ -144,9 +144,9 @@ app.controller('myCtrl', function($scope) {
     
     $scope.decrypt = function() 
     {
-    	if ($scope.pad == null || $scope.pad.length ==0)
+    	if ($scope.padIn == null || $scope.padIn.length ==0 ||$scope.hexIn == null || $scope.hexIn.length ==0)
     	{
-    		Console.log("empty pad");
+    		console.log("empty pad or message");
     		return;
     	}
     	
@@ -165,7 +165,7 @@ app.controller('myCtrl', function($scope) {
     	var s="";
     	for (var i =0; i< bytes.length;i++)
     	{
-    		var plainByte = bytes[i] ^ pad[i];
+    		var plainByte = bytes[i] ^ pad[i % p.length];
     		s+= plainByte.toString(16) +" ";
     		sPlain+= String.fromCodePoint(plainByte);
     	}
