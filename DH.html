@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="myApp" ng-controller="myCtrl">
+<html ng-app="myApp" ng-controller="myCtrl" ng-init="generateKeys()">
 <head>
 	<title>Diffie-Hellman Key Exchange</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript"src="angular.js"></script>
+	<script type="text/javascript"src="DH.js"></script>
+	<script type="text/javascript"src="BigInt.js"></script>
 
 </head>
 <body>
@@ -38,7 +40,7 @@
 		<ul>
 		<li>P: It's public</li>
 		<li>G: It's public</li>
-		<li>Xa: Bob's <u>private key</u> is a randomly generated number only he knows.</li>
+		<li>Xb: Bob's <u>private key</u> is a randomly generated number only he knows.</li>
 		</ul>
 	</div>
 	
@@ -76,8 +78,60 @@
 	
 		Write some text in textbox:
 		<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
-		P:<input type="text" ng-model="P" ><br>
-		G:<input type="text" ng-model="G" ><br>
+		
+		
+		
+		<table>
+		<tbody>
+	
+		<tr>
+			<th>
+			G
+			</th>
+			<td>
+			{{G}}
+			</td>
+		</tr>
+	
+		<tr>
+			<th>
+			P
+			</th>
+			<td>
+			{{P}}
+			</td>
+		</tr>
+	
+		<tr>
+			<th>
+			Alice's Secret (a)
+			</th>
+			<td>
+			{{a}}
+			</td>
+		</tr>
+	
+		<tr>
+			<th>
+			Bob's Secret(b)
+			</th>
+			<td>
+			{{b}}
+			</td>
+		</tr>
+	
+		<tr>
+			<th>
+			Shared Secret (s)
+			</th>
+			<td>
+			{{s}}
+			</td>
+		</tr>
+		</tbody>
+		</table>
+		
+		
 	
 		<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
 	
@@ -118,8 +172,38 @@ String.prototype.hexEncode = function(){
 
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope) {
-    $scope.name = "John Doe";
+  	$scope.G="?";
+  	$scope.P="?";
+  	$scope.a="?";
+  	$scope.b="?";
+  	$scope.s="?";
     
+    $scope.generateKeys = function(){
+    
+    	$scope.G= random_prime(30, 255);
+    	$scope.P= random_prime(30, 255);
+    	$scope.a= $scope.randByteArray(10);
+    	$scope.b= $scope.randByteArray(10);
+    
+    }
+    
+    $scope.randByteArray = function(n)
+    {
+    	var a =[];
+    	for(var i=0;i<n;i++)
+    	{
+    		a.push(Math.round(Math.random()*255));
+    	}
+    }
+    
+    $scope.bytesToString = function(n)
+    {
+    	var a =[];
+    	for(var i=0;i<n;i++)
+    	{
+    		a.push(Math.round(Math.random()*255));
+    	}
+    }
     
     $scope.changeMessage = function() {
         $scope.hexPlain = $scope.plain.hexEncode();

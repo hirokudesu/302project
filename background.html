@@ -16,116 +16,118 @@
         <div class="page">
             <div>
                 <h1>Background: A Little Computer science</h1>
+                
+                <p>[Intro here]</p>
 
-                <h1>Coding Numbers In Binary</h1>
+                <h2>Coding Numbers In Binary</h2>
 
                 <p>bytes,bits,shannons, register sies and big integers, complexity of
                 factorization, hexadecimal notation</p>
 				
-				<!-- begin MathToWeb -->
-<!-- (your LaTeX) $B=(b_0,b_1,b_2,b_3,b_4,b_5,b_6,b_7)$ -->
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow>
-	<mi>B</mi>
-	<mo>=</mo>
-	<mrow>
-		<mo form="prefix">(</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>0</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>1</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>2</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>3</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>4</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>5</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>6</sub>
-		</msub>
-		<mo>,</mo>
-		<msub>
-			<mi>b</mi>
-			<sub>7</sub>
-		</msub>
-		<mo form="postfix">)</mo>
-	</mrow>
-</mrow>
-</math>
-<!-- end MathToWeb -->
-<div>
-<input type="text" ng-model="binNum" ng-change='convertDemo("d")'>
-<input type="text" ng-model="binBin" ng-change='convertDemo("b")'>
-<input type="text" ng-model="binHex" ng-change='convertDemo("h")'>
-<input type="text" ng-model="binAscii" ng-change='convertDemo("a")'>
-</div>
+								<!-- begin MathToWeb -->
+				<!-- (your LaTeX) $B=(b_0,b_1,b_2,b_3,b_4,b_5,b_6,b_7)$ -->
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<mrow>
+					<mi>B</mi>
+					<mo>=</mo>
+					<mrow>
+						<mo form="prefix">(</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>0</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>1</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>2</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>3</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>4</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>5</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>6</sub>
+						</msub>
+						<mo>,</mo>
+						<msub>
+							<mi>b</mi>
+							<sub>7</sub>
+						</msub>
+						<mo form="postfix">)</mo>
+					</mrow>
+				</mrow>
+				</math>
+				<!-- end MathToWeb -->
+				<div>
+				<input type="text" ng-model="binNum" ng-change='convertDemo("d")'>
+				<input type="text" ng-model="binBin" ng-change='convertDemo("b")'>
+				<input type="text" ng-model="binHex" ng-change='convertDemo("h")'>
+				<input type="text" ng-model="binAscii" ng-change='convertDemo("a")'>
+				</div>
 
-<div>
+				<div>
 
-<h2> Why are keys hard to crack</h2>
-<p>
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-For a binary string (a string with combinatorial family {0,1}), the  number of possible permutations of length n is 2<sup>n</sup>. 
-The function 
-y=2<sup>x</sup> 
-grows very quickly, experiment by raising the number of bits in the demo below.
-At 64 bits the amount of time necessary to perform a brute force attack is a long time.
-In modern cryptography we use 256 bit or 512 bit keys.(Not shown here because of technical
-restrictions)
-</math>
-</p>
-<p>How long would it take to permute <input type="number" min="1" max="127" step="1" ng-model="bitCount" ng-change="computeTime()">
-bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?
-(Numbers approximate due to low javascript machine precision)</p>
-<table ng-init="computeTime()">
-<tr><th>Seconds</th><td>{{timeSeconds}}</td></tr> 
-<tr><th>Hours</th><td>{{timeSeconds/3600}}</td></tr> 
-<tr><th>Days</th><td>{{timeSeconds/(3600*24)}}</td></tr> 
-<tr><th>Years</th><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
-</table>
+				<h2> Why are keys hard to crack</h2>
+				<p>
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				For a binary string (a string with combinatorial family {0,1}), the  number of possible permutations of length n is 2<sup>n</sup>. 
+				The function 
+				y=2<sup>x</sup> 
+				grows very quickly, experiment by raising the number of bits in the demo below.
+				At 64 bits the amount of time necessary to perform a brute force attack is a long time.
+				In modern cryptography we use 256 bit or 512 bit keys.(Not shown here because of technical
+				restrictions)
+				</math>
+				</p>
+				<p>How long would it take to permute <input type="number" min="1" max="127" step="1" ng-model="bitCount" ng-change="computeTime()">
+				bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?
+				(Numbers approximate due to low javascript machine precision)</p>
+				<table ng-init="computeTime()">
+				<tr><th>Seconds</th><td>{{timeSeconds}}</td></tr> 
+				<tr><th>Hours</th><td>{{timeSeconds/3600}}</td></tr> 
+				<tr><th>Days</th><td>{{timeSeconds/(3600*24)}}</td></tr> 
+				<tr><th>Years</th><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
+				</table>
 
-<div>
-<h3>Challenge Question</h3>
-<p>Suggest a reason why 64 bits is insufficient if it would take {{(_computeTime(64,GHz)/(3600*24*365)).toFixed(2)}} years to decrypt.
-Are 80 bits enough?  Why/Why not?</p>
-<div class="challengeSoln">
-<p ng-hide="showAnswer[0]" ng-click="showAnswer[0]=true">Click to show answer</p>
-<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
-Remember that you aren't limited to use just a single processor.  If you had 5000 for example
-it would take {{(_computeTime(64,GHz)/(3600*24*5000)).toFixed(2)}} days.
-</p>
-<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
-80 bits is good enough to protect against most attackers.  If the entire load of the fastest 
-super computer in the world was tasked to compute this by brute force, it would still take about 
-2 years.  The combined computing power of several super computers could decrypt faster.
-But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
-it starts to take eons for conventional computers to perform a brute force attack.  Unfortunately most cryptographic algorithms rely on primes,
-so a prime sieve can be used to perform better, at least for small primes.  Consequently we tend to choose big primes to avoid problems.</p>
-</div>
-</div>
+				<div>
+				<h3>Challenge Question</h3>
+				<p>Suggest a reason why 64 bits is insufficient if it would take {{(_computeTime(64,GHz)/(3600*24*365)).toFixed(2)}} years to decrypt.
+				Are 80 bits enough?  Why/Why not?</p>
+				<div class="challengeSoln">
+				<p ng-hide="showAnswer[0]" ng-click="showAnswer[0]=true">Click to show answer</p>
+				<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
+				Remember that you aren't limited to use just a single processor.  If you had 5000 for example
+				it would take {{(_computeTime(64,GHz)/(3600*24*5000)).toFixed(2)}} days.
+				</p>
+				<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
+				80 bits is good enough to protect against most attackers.  If the entire load of the fastest 
+				super computer in the world was tasked to compute this by brute force, it would still take about 
+				2 years.  The combined computing power of several super computers could decrypt faster.
+				But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
+				it starts to take eons for conventional computers to perform a brute force attack.  Unfortunately most cryptographic algorithms rely on primes,
+				so a prime sieve can be used to perform better, at least for small primes.  Consequently we tend to choose big primes to avoid problems.</p>
+				</div>
+				</div>
 
-</div>
+				</div>
                 <h1>Text As Numbers</h1>
 
                 <p>Remember that a computer can only represent numbers in memory.  A number has no intrinsic symbolic value, so

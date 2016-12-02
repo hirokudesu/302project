@@ -13,12 +13,47 @@ img {
 body
 {
 	background-image: url(/img/bg.jpg);
+	font-family:Tahoma, Verdana, Segoe, sans-serif;
+	font-size: 12pt;
+	/*font-family: Cambria, Georgia, serif;*/
 	/*background: #F8F8FF;*/
 }
 
 p
 {
 	margin-left:.5em;
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+}
+
+h1 {
+	font-family: Calibri ,sans-serif;
+	font-size: 24pt;
+	font-style: bold;
+	font-weight: 500;
+	line-height: 26.4px;
+}
+
+h2 {
+	font-family: Arial Black ,sans-serif;
+	font-size: 20pt;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 20px;
+}
+
+h3 {
+	font-family: Arial Black ,sans-serif;
+	font-size: 18pt;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 16px;
 }
 
 table
@@ -44,6 +79,13 @@ th
 	width:30%;
 }
 
+input[type="text"], textarea {
+
+  background-color : rgba(255,255,255,.2);
+  border:  2px ridge olive;
+  font-size: 12pt;
+
+}
 
 
 .caption
