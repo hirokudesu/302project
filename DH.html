@@ -13,7 +13,10 @@
 	
 	<div>
 		<h1> Diffie-Hellman Key Exchange </h1>
-		<p> [Introduction goes here] </p>
+		<p> The Diffie-Hellman key exchange builds on the concept of the One Time Pad.
+		Recall that for the one time pad, the pad needed to be physically transported to all
+		parties.  The Diffie-Hellman key exchange uses modular arithmetic to generate the
+		pad without either party needing to transmit secret information. </p>
 	</div>
 	
 	<div>
@@ -77,8 +80,8 @@
 		<h1> Demo </h1>
 	
 		Write some text in textbox:
-		<input type="text" ng-model="plain" ng-change="changeMessage()" /><br>
-		
+		<textarea type="text" ng-model="plain" ng-change="changeMessage()" /></textarea><br>
+		<button ng-click="generateKeys();changeMessage()">Generate Keys</button>
 		
 		
 		<table>
@@ -104,7 +107,7 @@
 	
 		<tr>
 			<th>
-			Alice's Secret (a)
+			Alice's Secret (Xa)
 			</th>
 			<td>
 			{{a}}
@@ -113,35 +116,87 @@
 	
 		<tr>
 			<th>
-			Bob's Secret(b)
+			Bob's Secret(Xb)
 			</th>
 			<td>
 			{{b}}
 			</td>
 		</tr>
+		
+		<tr>
+			<th>
+			Alice's Public Key (Ya)
+			</th>
+			<td>
+			{{pa}}
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+			Bob's Public Key (Yb)
+			</th>
+			<td>
+			{{pb}}
+			</td>
+		</tr>
 	
 		<tr>
 			<th>
-			Shared Secret (s)
+			Shared Secret (Ka)
 			</th>
 			<td>
-			{{s}}
+			{{sa}}
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+			Shared Secret (Kb)
+			</th>
+			<td>
+			{{sb}}
 			</td>
 		</tr>
 		</tbody>
 		</table>
 		
-		
+		<h2> Encrypt </h2>
 	
-		<h1 ng-show="plain" ng-model="plain">Hello {{plain}}</h1>
-	
-		<h2>Plain</h2>
-		<p ng-model="plain" > {{plain}}</p>
-	
-		<h2>Plain(hex)</h2>
+		<h3>Plain(hex)</h3>
+		<div class="output">
 		<p ng-model="hexPlain" > {{hexPlain}}</p>
-		<p >Crypt {{ hexCrypt }}</p>
-		<p >Hello {{ hexCrypt }}</p>
+		</div>
+		
+		<h3>Encrypted(hex)</h3>
+		<div class="output">
+		<p > {{ hexCrypt }}</p>
+		</div>
+		
+		<hr>
+		
+		<div>
+			<h2> Decrypt </h2>
+			Copy the encrypted data fromt the "encrypted hex" box into this box to decrypt it.
+			Generate new keys to see how choosing the wrong key just gets you garbled data.
+			<textarea  type="text" ng-model="hexCryptIn" ng-change="changeCrypt()" >
+			Now put the hex encoded string you need decrypted here.
+			</textarea>
+			Key:<input type="number" ng-model="keyIn" ng-change="changeCrypt()"></input>
+			<button ng-click="keyIn=sa;changeCrypt()">Copy From Above Key</button>
+			<br>
+		
+			<h3>Decrypted(Hex) </h3>
+			<div class="output">
+			<p> {{hexOut}} </p>
+			</div>
+		
+			<h3>Plain text </h3>
+			<div class="output">
+			<p> {{plainOut}} </p>
+			</div>
+		</div>
+		
 	</div>
 	
 	<div>
@@ -180,34 +235,93 @@ app.controller('myCtrl', function($scope) {
     
     $scope.generateKeys = function(){
     
-    	$scope.G= random_prime(30, 255);
-    	$scope.P= random_prime(30, 255);
-    	$scope.a= $scope.randByteArray(10);
-    	$scope.b= $scope.randByteArray(10);
+    	$scope.P= random_prime(30, 2048);
+    	$scope.G= random_prime(0, $scope.P);
+    	$scope.a= $scope.randInt(1<<16);
+    	$scope.b= $scope.randInt(1<<16);
+    	
+    	var pa = bigInt($scope.G).modPow($scope.a,$scope.P);
+    	
+    	var pb = bigInt($scope.G).modPow($scope.b,$scope.P);
+    	
+    	
+    	var sa =  bigInt(pb).modPow($scope.a,$scope.P);
+    	var sb =  bigInt(pa).modPow($scope.b,$scope.P);
+    	
+    	$scope.pb= pb.toString(10);
+    	$scope.pa= pa.toString(10);
+    	$scope.sa=sa.toJSNumber();
+    	$scope.sb=sa.toJSNumber();
     
     }
     
-    $scope.randByteArray = function(n)
+    $scope.randInt = function(n)
     {
-    	var a =[];
-    	for(var i=0;i<n;i++)
-    	{
-    		a.push(Math.round(Math.random()*255));
-    	}
+    	return Math.round(Math.random()*n);
     }
     
-    $scope.bytesToString = function(n)
+    $scope.bytesToString = function(bytes)
     {
-    	var a =[];
-    	for(var i=0;i<n;i++)
+    	var a ="";
+    	for(var i=0;i<bytes.length;i++)
     	{
-    		a.push(Math.round(Math.random()*255));
+    		a+=bytes[i].toString(16)+" ";
     	}
+    	return a;
+    }
+    
+    $scope.stringFromBytes = function(bytes)
+    {
+    	var a ="";
+    	for(var i=0;i<bytes.length;i++)
+    	{
+    		a+=(String.fromCodePoint(bytes[i]));
+    	}
+    	return a;
     }
     
     $scope.changeMessage = function() {
+    	
+    	if($scope.plain == null)
+    		return;
+    		
         $scope.hexPlain = $scope.plain.hexEncode();
+        var bytes=[];
+        for(var i=0; i<$scope.plain.length;i++)
+        {
+        	bytes.push($scope.plain.codePointAt(i) ^ $scope.sa);
+        }
+        
+        $scope.hexCrypt=$scope.bytesToString(bytes);
+        
       };
+      
+    $scope.changeCrypt = function() 
+    {
+    	if($scope.hexCryptIn == null || $scope.keyIn == null)
+    	{
+    		return;
+    	}
+    	var cipherText = $scope.hexCryptIn;
+    	var s = "";
+    	var bytes = cipherText.split(" ");
+    	
+    	var plainBytes=[];
+		for (var i =0; i< bytes.length;i++)
+    	{
+    		plainBytes[i] =  parseInt(bytes[i],16) ^ $scope.keyIn;
+    		s+= plainBytes[i].toString(16) +" ";
+    	}
+    	$scope.hexOut=s;
+    	
+    	s="";
+    	for (var i =0; i< plainBytes.length;i++)
+    	{
+    		s+= String.fromCodePoint(plainBytes[i]);
+    	}
+    	$scope.plainOut=s;
+        
+    };  
 });
 
 </script>

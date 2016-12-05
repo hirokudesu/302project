@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="myApp" ng-controller="myCtrl">
 <head>
-	<title>Diffie-Hellman Key Exchange</title>
+	<title>One Time Pad</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="angular.js"></script>
 
@@ -60,8 +60,8 @@
 	to encrypt.  You can just use a shorter pad and go back to the start if you hit the end.
 	So the general form of the onetime pad is a string of permutations.
 	</p>
-	C<sub>i</sub>=M<sub>i</sub>α<sub>j</sub><br>
-	M<sub>i</sub>=C<sub>i</sub>α<sup>-1</sup><sub>j</sub><br>
+	C<sub>i</sub>=M<sub>i</sub>β<sub>j</sub><br>
+	M<sub>i</sub>=C<sub>i</sub>β<sub>j</sub><sup>-1</sup><br>
 	j=i (mod N) where N is the length of the pad.
 	
 	
