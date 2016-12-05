@@ -10,16 +10,39 @@
 <div class="page">
 	<div>
 	<h1> One Time Pad </h1>
-	<h1> A Pad on +26 over letters<h1>
-	<h1> Logical XOR as is +_2 on Z_2 </h1>
-	<h2> Generalization over strings</h2>
-	<p> bitwise logical xor</p>
-	<p> A XOR B = A.bits +_2 B.bits<p>
+	<p> The One-Time-Pad is one of the classic forms of encryption.  Unlike other forms of encryption it has 
+	a completely random nature, and so can only be compromised if the key string (called the pad) is intercepted
+	when it's in transit.  The downside of the pad is that it can be intercepted, because it must be physically
+	transported to all parties involved in the communication.
 	
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+	<h2> A Pad on +<sub>26</sub> over letters</h2>
+	<p> In the simplest case a one time pad can be considered only over only uppercase letters.
+	Suppose we have the message</p>
+	<p><strong>HELLO</strong></p>
+	<p>And the pad</p>
+	<p><strong>1 0 1 26 25</strong><p>
+	<p>Remember there are 26 letters, so adding 26 does noting, but adding 25 gets you the previous letter.. 
+	So the resulting message is just the each letter shifted by this amount wrapping at Z.
+	</p>
+	<p>
+	<strong>IEMLN</strong>
+	<p>
+	<p>Note that performing the additive inverse(subtraction) of the encrypted message with the
+	pad decrypts the message.
+	</p>
+	
+	
+	<h2> Logical XOR is +<sub>2</sub> on Z<sub>2</sub> </h2>
+	<p>In the computer sciece background we started talking about XOR.  XOR is important because
+	it is reversible, and can be applied to bits.  Since a string is just a list of bits we apply
+	XOR to encrypt the message string.  XOR is addition on GF(2).  Enter two characters in the
+	field below to see how they can be XOR'd and then the original is recovered.
+	</p>
 	<div>
 		<form>
-		<input type="text" ng-model="xorChar" ng-change="xorDemo()"></input><br>
-		<input type="text" ng-model="xorPad" ng-change="xorDemo()"></input>
+		Plain:<input type="text" ng-model="xorChar" ng-change="xorDemo()"></input><br>
+		Pad:  <input type="text" ng-model="xorPad" ng-change="xorDemo()"></input>
 		</form>
 	
 		<p class="error" ng-if="!xorDemoValidate()">Invalid input: Please enter a single character in each box</p>
@@ -32,37 +55,66 @@
 		</table>
 	</div>
 	
+	<p>
+	It actually isn't even necessary that the pad be the same length as the message you want
+	to encrypt.  You can just use a shorter pad and go back to the start if you hit the end.
+	So the general form of the onetime pad is a string of permutations.
+	</p>
+	C<sub>i</sub>=M<sub>i</sub>α<sub>j</sub><br>
+	M<sub>i</sub>=C<sub>i</sub>α<sup>-1</sup><sub>j</sub><br>
+	j=i (mod N) where N is the length of the pad.
+	
+	
 	</div>
 	
-	
+	<hr>
 	<h1> Demo </h1>
 	
-	Write some text in textbox:
-	
+	<p>
+	Write some text in textbox to encrypt it:
+	</p>
 	<form>
-	<input type="text" ng-model="plain" ng-change="changeMessage()">Message</input><br>
-	<input type="text" ng-model="padLength" ng-change="generatePad()" ng-init="generatePad()"> Pad Length</input>
+	Message:<br><textarea type="text" ng-model="plain" ng-change="changeMessage()"></textarea><br>
+	Pad Length:<br><input type="text" ng-model="padLength" ng-change="generatePad()" ng-init="generatePad()"> </input>
 	</form>
 	<!-- base 26 OTP -- >
 	<!--- generalization of otp-->
-	<h1>Encrypt</h1>
+	<h2>Encrypt</h2>
 	
-	<h2>Plain</h2>
-	<p ng-model="plain" > {{plain}}</p>
-	<h2>Plain(hex)</h2>
+	<h3>Plain(hex)</h3>
+	<div class="output">
 	<p ng-model="hexPlain" > {{hexPlain}}</p>
-	<h2>Pad</h2>
+	</div>
+	<h3>Pad (Randomly generated)</h3>
+	<div class="output">
 	<p>{{hexPad}}</p>
-	<p>Crypt {{ hexCrypt }}</p>
+	</div>
 	
-	<h1>Decrypt</h1>
+	<h3>Encrypted Hex</h3>
+	<div class="output">
+	<p> {{ hexCrypt }}</p>
+	</div>
+	
+	<hr>
+	<h2>Decrypt</h2>
+	<p> Copy the <strong>encrypted hex</strong> from above into the below box and provide a pad to decrypt it.
+	(hint: copy pad from above, then fiddle with the pad to see how guessing incorrectly garbles the message.)
 	<form>
-	<input type="text" ng-model="hexIn" ng-change="decrypt()">Ciphertext</input><br>
-	<input type="text" ng-model="padIn" ng-change="decrypt()">Pad</input>
+	Encrypted Hex<br><textarea type="text" ng-model="hexIn" ng-change="decrypt()"></textarea><br>
+	Pad<br><textarea type="text" ng-model="padIn" ng-change="decrypt()"></textarea>
 	<input type="button" ng-click="padIn=hexPad;decrypt()" value="Copy pad from above"></input>
 	</form>
+	<p>Note: Pad must be specified in hex, so use only numbers 0..9 and letters A..F</p>
+	
+	<h3>Decrypted Hex</h3>
+	<div class="output">
 	<p>{{outHex}}</p>
+	</div>
+	
+	<h3>Decrypted Text</h3>
+	<div class="output">
 	<p>{{outPlain}}</p>
+	</div>
 	
 	<div>
 	<hr>

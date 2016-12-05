@@ -15,18 +15,29 @@
     <div class="container">
         <div class="page">
             <div>
-                <h1>Background: A Little Computer science</h1>
+                <h1>Background: A Little Computer Science</h1>
                 
-                <p>[Intro here]</p>
+                <p>This section is a bit of computer science background, feel free to skip it if
+                you've taken a programming course or are pressed for time.<br>
+                <a href="OTP.html">&gt;Skip right to the next section&lt;</a></p>
+                
 
                 <h2>Coding Numbers In Binary</h2>
-
-                <p>bytes,bits,shannons, register sies and big integers, complexity of
-                factorization, hexadecimal notation</p>
+				<math xmlns="http://www.w3.org/1998/Math/MathML">
+                <p>
+                A binary string is an ordered tuple of either 0 or 1.  The number of possible
+                permutation of a binary string is 2<sup>n</sup> where n is the length.
+                We use binary strings to encode numbers in computers according to the formula
+                
+                </p>
+                N=∑ b<sub>i</sub> * 2 <sup>i</sup>
+                <p> When we put eight bits together they form a byte, the number 8 is not 
+                intrinsically special, but it has some nice properties so we've standardized
+                it to be the length of a byte.</p>
 				
 								<!-- begin MathToWeb -->
 				<!-- (your LaTeX) $B=(b_0,b_1,b_2,b_3,b_4,b_5,b_6,b_7)$ -->
-				<math xmlns="http://www.w3.org/1998/Math/MathML">
+				
 				<mrow>
 					<mi>B</mi>
 					<mo>=</mo>
@@ -75,13 +86,10 @@
 					</mrow>
 				</mrow>
 				</math>
+				
+				
 				<!-- end MathToWeb -->
-				<div>
-				<input type="text" ng-model="binNum" ng-change='convertDemo("d")'>
-				<input type="text" ng-model="binBin" ng-change='convertDemo("b")'>
-				<input type="text" ng-model="binHex" ng-change='convertDemo("h")'>
-				<input type="text" ng-model="binAscii" ng-change='convertDemo("a")'>
-				</div>
+				
 
 				<div>
 
@@ -98,7 +106,8 @@
 				</math>
 				</p>
 				<p>How long would it take to permute <input type="number" min="1" max="127" step="1" ng-model="bitCount" ng-change="computeTime()">
-				bits with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?
+				bits (~{{Math.floor(bitCount/8.0)}} alphanumeric characters,~{{Math.floor(Math.pow(2,bitCount)/10.0)}} character 10-digit PIN)
+				 with a processor speed of <input type="number" min="0.1"   ng-model="GHz" ng-change="computeTime()">  GHz?
 				(Numbers approximate due to low javascript machine precision)</p>
 				<table ng-init="computeTime()">
 				<tr><th>Seconds</th><td>{{timeSeconds}}</td></tr> 
@@ -106,24 +115,49 @@
 				<tr><th>Days</th><td>{{timeSeconds/(3600*24)}}</td></tr> 
 				<tr><th>Years</th><td>{{timeSeconds/(3600*24*365)}}</td></tr> 
 				</table>
+				
+				<p> In light of the above you might wonder if your credit cards and bank account are safe.
+				Than answer is yes they are safe, but no they are not secure.  If you enter an incorrect PIN
+				too many times when you perform a transaction your account will be frozen.  Since this occurs
+				on the financial institutions servers, there is no way for a thief to circumvent this unless
+				they have a privileged way or physical access to those machines.
+				</p>
+				
 
 				<div>
-				<h3>Challenge Question</h3>
+				<h3>Challenge Questions</h3>
+				
+				<p>On April 22nd 2016 the FBI broke into a suspected criminals iPhone, propose a way they could have accomplished this?</p>
+				<div class="challengeSoln">
+					<p ng-hide="showAnswer[0]" ng-click="showAnswer[0]=true">Click to show answer</p>
+					<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
+					The iPhone will lock out/erase itself users if an incorrect password is entered too many times.
+					The iPhone's ability to lock out user entry is just a piece of software easily bypassed.
+					When an iPhone "erases" itself, it just forgets the key that would decrypt the device in
+					combination with the correct password.  The key must necessarily be stored somewhere in the phone's
+					persistant memory, in the clear.  Thus if the iPhone erases itself, the FBI need only restore this key from a copy.
+					Bypassing the routine that causes the iPhone to lockout/erase itself would be relatively simple for an
+					organization like the FBI, then they would only have to break the 10000 possible PINs or probably a short
+					password.  If the suspect had a longer password, this might have been more difficult.
+					</p>
+				</div>
+				
+				
 				<p>Suggest a reason why 64 bits is insufficient if it would take {{(_computeTime(64,GHz)/(3600*24*365)).toFixed(2)}} years to decrypt.
 				Are 80 bits enough?  Why/Why not?</p>
 				<div class="challengeSoln">
-				<p ng-hide="showAnswer[0]" ng-click="showAnswer[0]=true">Click to show answer</p>
-				<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
-				Remember that you aren't limited to use just a single processor.  If you had 5000 for example
-				it would take {{(_computeTime(64,GHz)/(3600*24*5000)).toFixed(2)}} days.
-				</p>
-				<p ng-show="showAnswer[0]" ng-click="showAnswer[0]=false">
-				80 bits is good enough to protect against most attackers.  If the entire load of the fastest 
-				super computer in the world was tasked to compute this by brute force, it would still take about 
-				2 years.  The combined computing power of several super computers could decrypt faster.
-				But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
-				it starts to take eons for conventional computers to perform a brute force attack.  Unfortunately most cryptographic algorithms rely on primes,
-				so a prime sieve can be used to perform better, at least for small primes.  Consequently we tend to choose big primes to avoid problems.</p>
+					<p ng-hide="showAnswer[1]" ng-click="showAnswer[1]=true">Click to show answer</p>
+					<p ng-show="showAnswer[1]" ng-click="showAnswer[1]=false">
+					Remember that you aren't limited to use just a single processor.  If you had 5000 for example
+					it would take {{(_computeTime(64,GHz)/(3600*24*5000)).toFixed(2)}} days.
+					</p>
+					<p ng-show="showAnswer[1]" ng-click="showAnswer[1]=false">
+					80 bits is good enough to protect against most attackers.  If the entire load of the fastest 
+					super computer in the world was tasked to compute this by brute force, it would still take about 
+					2 years.  The combined computing power of several super computers could decrypt faster.
+					But if an encryption scheme can only be cracked by brute force, then at much more than 80 bits
+					it starts to take eons for conventional computers to perform a brute force attack.  Unfortunately most cryptographic algorithms rely on primes,
+					so a prime sieve can be used to perform better, at least for small primes.  Consequently we tend to choose big primes to avoid problems.</p>
 				</div>
 				</div>
 
@@ -139,7 +173,12 @@
                 For example a codepoint U+1F4A9 is defined as 💩 .  On its own 1F4A9 has no meaning, but we decided that it means this cheery
                 fellow, and so it does.  Similarly, all emoji codepoints map to different glyphs on different platforms.
                 <a href="http://unicode.org/emoji/charts/full-emoji-list.html"> This table shows the differences across various platforms</a></p>
-                <p>ASCII,UTF-8, generalization of byte stream</p>
+                <p>Generally speaking for encoding english we use ASCII or UTF-8.  UTF-8 is a mode of unicode, most commonly used
+                to encode international characters.  ASCII is commonly used by many programming languages, and only requires 8 bits
+                per character. UTF-8 is compatible with ASCII, so typing english characters only requires 8 bits either way.
+                Below is an ASCII table showing the mapping of numbers to characters.  Notice that the first column of the table is
+                non printing characters, not all characters represent useful letters.
+                </p>
                 
                 <div>
                 <img src="img/ASCII-Table-wide.svg">
@@ -148,16 +187,37 @@
                 </div>
                 </div>
 
-                <p>Character encodings are maps</p>
+                <p>A character encoding is simply a map of a number onto a letter.
+               If you'd like a simpler example you can consider the mapping of numbers onto letters
+               of the alphabet.</p>
+                <img src="img/alpha.gif" style="max-width:250px"></img>
 
+
+				<div>
+				<p>
+				You can experiment with conversion between different notations below.
+				Enter your desired number in the appropriate box and the other boxes will
+				change to reflect that number in a different notation.
+				</p>
+				<table>
+				<tr><th>Decimal:</th><td><input type="text" ng-model="binNum" ng-change='convertDemo("d")'></td></tr>
+				<tr><th>Binary:</th><td><input type="text" ng-model="binBin" ng-change='convertDemo("b")'></td></tr>
+				<tr><th>Hex:</th><td><input type="text" ng-model="binHex" ng-change='convertDemo("h")'></td></tr>
+				<tr><th>Text:</th><td><input type="text" ng-model="binAscii" ng-change='convertDemo("a")'></td></tr>
+				<table>
+				</div>
+				
                 <h1>Logical Operations</h1>
 
-                <p>Focus on Xor</p>
-
-                <h2>All data is strings</h2>
-
-                <p>All data is strings, so the algorithms presented are generalizable to
-                all data</p>
+                <p>There are several boolean operators used in a computer, but we're mainly interested in xor(written ⊻ or ⊕)</p>
+				<table >
+				<tr><th>XOR</th><th>0</th><th>1</th></tr>
+				<tr><th>0</th><th>0</th><th>1</th></tr>
+				<tr><th>1</th><th>1</th><th>0</th></tr>
+				</table>
+				
+				<p>We also have AND, OR,NAND and NOR but they're less relevant to cryptography</p>
+                
             </div>
 
 

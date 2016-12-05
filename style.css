@@ -1,7 +1,3 @@
-textarea
-{
-	width:100%;
-}
 
 img {
     display: block;
@@ -32,7 +28,7 @@ p
 
 h1 {
 	font-family: Calibri ,sans-serif;
-	font-size: 24pt;
+	font-size: 30pt;
 	font-style: bold;
 	font-weight: 500;
 	line-height: 26.4px;
@@ -49,7 +45,7 @@ h2 {
 
 h3 {
 	font-family: Arial Black ,sans-serif;
-	font-size: 18pt;
+	font-size: 16pt;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 500;
@@ -84,6 +80,19 @@ input[type="text"], textarea {
   background-color : rgba(255,255,255,.2);
   border:  2px ridge olive;
   font-size: 12pt;
+  margin-left:1.5em;
+  margin-right:1.5em;
+  margin-top:.2em;
+  margin-bottom:.2em;
+  
+
+}
+
+
+
+textarea {
+
+  width:95%;
 
 }
 
@@ -97,10 +106,9 @@ input[type="text"], textarea {
 
 .challengeSoln
 {
-	color: $FFE;
 	background:#FFE;
 	border: solid black 1px;
-	width:40%;
+	width:60%;
 	padding:.3em;
 }
 
@@ -142,13 +150,14 @@ input[type="text"], textarea {
 
 
 
+/* 
 #navbar li
 {
-	/*display: block;*/
+	display: block;
 }
 
 #navbar  {
-    /*list-style-type: disc;*/
+    list-style-type: disc;
 
     padding: 0;
     overflow: hidden;
@@ -157,14 +166,16 @@ input[type="text"], textarea {
 
 #navbar li {
 	margin-top:.5em;
-    /*float: left;
-    */
+    float: left;
+    
 }
 
 #navbar li a {
-   /* display: block;*/
+   display: block;
 
     text-align: center;
     padding: 14px 16px;
-    /*text-decoration: none;*/
+    /*text-decoration: none;
 }
+*/
+ */
