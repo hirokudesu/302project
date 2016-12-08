@@ -24,8 +24,8 @@
 		<p>Public numbers are agreed upon at the start of the transaction. 
 		 They are sent in the clear so anyone can see them.</p>
 		<ul>
-		<li>P:An arbitrary large number</li>
-		<li>G:An arbitrary large number</li>
+		<li>P:An arbitrary large prime</li>
+		<li>G:An arbitrary large prime</li>
 		</ul>
 	</div>
 	
@@ -51,16 +51,17 @@
 		<h2> Public generated numbers</h2>
 	
 		<p>Using the private data and shared data both parties generate new shared data</p>
-	
+		<math>
 		<ul>
-		<li>Ya=(G^Xa) mod P: Alice's public key is a function of her private key and public information.</li>
-		<li>Yb=(G^Xb) mod P: Alice's public key is a function of her private key and public information</li>
+		<li>Ya=(G<sup>Xa</sup>) mod P: Alice's <u>public key</u> is a function of her private key and public information.</li>
+		<li>Yb=(G<sup>Xb</sup>) mod P: Bob's <u>public key</u> is a function of his private key and public information</li>
 		</ul>
+		
 	</div>
 	
 	<div>
-	Ya --> Bob<br>
-	Yb --> Alice
+	Ya is transmitted to Bob<br>
+	Yb is transmitted to Alice
 	
 	</div>
 	
@@ -71,15 +72,16 @@
 	
 		<p>Using the private data and shared data both parties generate new shared data</p>
 	
-		<p>Ka=(Yb^Xa) mod P</p>
-		<p>Kb=(Ya^Xb) mod P</p>
+		<p>Ka=Yb<sup>Xa</sup> (mod P)</p>
+		<p>Kb=Ya<sup>Xb</sup> (mod P)</p>
 		<p>Ka=Kb</p>
 	</div>
-	
+	</math>
 	<div>
 		<h1> Demo </h1>
 	
-		Write some text in textbox:
+		Write some text in textbox to encrypt it. You can generate different keys to see it
+		encrypted in different ways.
 		<textarea type="text" ng-model="plain" ng-change="changeMessage()" /></textarea><br>
 		<button ng-click="generateKeys();changeMessage()">Generate Keys</button>
 		
