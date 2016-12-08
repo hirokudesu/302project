@@ -1,10 +1,22 @@
 
-img {
+.vector img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width:95%;
+    max-width:95%;
 }
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+    max-width:800px;
+}
+
+
+
 
 body
 {
@@ -13,6 +25,13 @@ body
 	font-size: 12pt;
 	/*font-family: Cambria, Georgia, serif;*/
 	/*background: #F8F8FF;*/
+}
+
+
+a{
+	
+	color: dodgerblue;
+	font-weight:bold;
 }
 
 p
